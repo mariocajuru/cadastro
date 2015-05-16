@@ -2,14 +2,21 @@ package br.com.mario.cadastro.modelo;
 
 // Generated 16/05/2015 14:37:37 by Hibernate Tools 4.3.1
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -31,6 +38,7 @@ public class Usuario implements java.io.Serializable {
 	private String useLogin;
 	private Boolean useAtivo;
 	private String useCargo;
+	private Set<String> permissao=new HashSet<String>();
 
 	public Usuario() {
 	}
@@ -40,12 +48,13 @@ public class Usuario implements java.io.Serializable {
 	}
 
 	public Usuario(Pessoa pessoa, String useSenha, String useLogin,
-			Boolean useAtivo, String useCargo) {
+			Boolean useAtivo, String useCargo,Set<String> permissao) {
 		this.pessoa = pessoa;
 		this.useSenha = useSenha;
 		this.useLogin = useLogin;
 		this.useAtivo = useAtivo;
 		this.useCargo = useCargo;
+		this.permissao=permissao;	
 	}
 
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "pessoa"))
@@ -105,6 +114,20 @@ public class Usuario implements java.io.Serializable {
 	public void setUseCargo(String useCargo) {
 		this.useCargo = useCargo;
 	}
+	
+	@ElementCollection(targetClass = String.class)
+	@JoinTable(
+	           name = "USUARIO_PERMISSAO", 
+			     uniqueConstraints = {@UniqueConstraint(columnNames = {"USUARIO", "PERMISSAO"})}, 
+			     joinColumns = @JoinColumn(name = "USUARIO"))
+	@Column(name = "PERMISSAO", length = 600)
+	public Set<String> getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(Set<String> permissao) {
+		this.permissao = permissao;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -114,6 +137,8 @@ public class Usuario implements java.io.Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((permissao == null) ? 0 : permissao.hashCode());
 		result = prime * result + pesId;
 		result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
 		result = prime * result
@@ -136,6 +161,11 @@ public class Usuario implements java.io.Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
+		if (permissao == null) {
+			if (other.permissao != null)
+				return false;
+		} else if (!permissao.equals(other.permissao))
+			return false;
 		if (pesId != other.pesId)
 			return false;
 		if (pessoa == null) {

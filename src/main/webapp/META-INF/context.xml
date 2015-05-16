@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+	<Resource name="jdbc/cadastroDB" 
+	auth="Container"
+	type="javax.sql.DataSource"
+	maxActive="100"
+	maxIdle="30"
+	maxWait="10000"
+	username="sa"
+	password="122404"
+	driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+	url="jdbc:sqlserver://Vilela:1433;databaseName=cadastro;autoReconnect=true;autoReconnectForPools=true"/>
+</Context>
