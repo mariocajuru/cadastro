@@ -1,0 +1,421 @@
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('CLIENTE') and o.name = 'FK_CLIENTE_PESSOA_CL_PESSOA')
+alter table CLIENTE
+   drop constraint FK_CLIENTE_PESSOA_CL_PESSOA
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('CLIENTE') and o.name = 'FK_CLIENTE_VENDEDOR__VENDEDOR')
+alter table CLIENTE
+   drop constraint FK_CLIENTE_VENDEDOR__VENDEDOR
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ENDERECO') and o.name = 'FK_ENDERECO_ENDERECO__BAIRRO')
+alter table ENDERECO
+   drop constraint FK_ENDERECO_ENDERECO__BAIRRO
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ENDERECO') and o.name = 'FK_ENDERECO_ENDERECO__CIDADE')
+alter table ENDERECO
+   drop constraint FK_ENDERECO_ENDERECO__CIDADE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ENDERECO') and o.name = 'FK_ENDERECO_ENDERECO__PESSOA')
+alter table ENDERECO
+   drop constraint FK_ENDERECO_ENDERECO__PESSOA
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('E_MAIL') and o.name = 'FK_E_MAIL_E_MAIL_PE_PESSOA')
+alter table E_MAIL
+   drop constraint FK_E_MAIL_E_MAIL_PE_PESSOA
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PESSOA_FISICA') and o.name = 'FK_PESSOA_F_PESSOA_PE_PESSOA')
+alter table PESSOA_FISICA
+   drop constraint FK_PESSOA_F_PESSOA_PE_PESSOA
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PESSOA_JURIDICA') and o.name = 'FK_PESSOA_J_PESSOA_PE_PESSOA')
+alter table PESSOA_JURIDICA
+   drop constraint FK_PESSOA_J_PESSOA_PE_PESSOA
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('TELEFONE') and o.name = 'FK_TELEFONE_TELEFONE__PESSOA')
+alter table TELEFONE
+   drop constraint FK_TELEFONE_TELEFONE__PESSOA
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('USUARIO') and o.name = 'FK_USUARIO_PESSOA_US_PESSOA')
+alter table USUARIO
+   drop constraint FK_USUARIO_PESSOA_US_PESSOA
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('VENDEDOR') and o.name = 'FK_VENDEDOR_PESSOA_VE_PESSOA')
+alter table VENDEDOR
+   drop constraint FK_VENDEDOR_PESSOA_VE_PESSOA
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('BAIRRO')
+            and   type = 'U')
+   drop table BAIRRO
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('CIDADE')
+            and   type = 'U')
+   drop table CIDADE
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('CLIENTE')
+            and   name  = 'VENDEDOR_CLIENTE_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index CLIENTE.VENDEDOR_CLIENTE_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('CLIENTE')
+            and   type = 'U')
+   drop table CLIENTE
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('ENDERECO')
+            and   name  = 'ENDERECO_BAIRRO_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index ENDERECO.ENDERECO_BAIRRO_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('ENDERECO')
+            and   name  = 'ENDERECO_CIDADE_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index ENDERECO.ENDERECO_CIDADE_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('ENDERECO')
+            and   type = 'U')
+   drop table ENDERECO
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('E_MAIL')
+            and   name  = 'E_MAIL_PESSOA_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index E_MAIL.E_MAIL_PESSOA_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('E_MAIL')
+            and   type = 'U')
+   drop table E_MAIL
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('PESSOA')
+            and   type = 'U')
+   drop table PESSOA
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('PESSOA_FISICA')
+            and   type = 'U')
+   drop table PESSOA_FISICA
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('PESSOA_JURIDICA')
+            and   type = 'U')
+   drop table PESSOA_JURIDICA
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('TELEFONE')
+            and   name  = 'TELEFONE_PESSOA_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index TELEFONE.TELEFONE_PESSOA_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('TELEFONE')
+            and   type = 'U')
+   drop table TELEFONE
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('USUARIO')
+            and   type = 'U')
+   drop table USUARIO
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('VENDEDOR')
+            and   type = 'U')
+   drop table VENDEDOR
+go
+
+/*==============================================================*/
+/* Table: BAIRRO                                                */
+/*==============================================================*/
+create table BAIRRO (
+   BAI_ID               int                  not null,
+   BAI_NOME             varchar(150)         null,
+   BAI_REGIAO           varchar(50)          null,
+   constraint PK_BAIRRO primary key nonclustered (BAI_ID)
+)
+go
+
+/*==============================================================*/
+/* Table: CIDADE                                                */
+/*==============================================================*/
+create table CIDADE (
+   CID_ID               int                  not null,
+   CID_NOME             varchar(150)         null,
+   CID_UF               char(2)              null,
+   constraint PK_CIDADE primary key nonclustered (CID_ID)
+)
+go
+
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE (
+   PES_ID               int                  not null,
+   VEN_PES_ID           int                  not null,
+   CLI_DATA_NASCIMENTO  datetime             null,
+   constraint PK_CLIENTE primary key (PES_ID)
+)
+go
+
+/*==============================================================*/
+/* Index: VENDEDOR_CLIENTE_FK                                   */
+/*==============================================================*/
+create index VENDEDOR_CLIENTE_FK on CLIENTE (
+VEN_PES_ID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: ENDERECO                                              */
+/*==============================================================*/
+create table ENDERECO (
+   PES_ID               int                  not null,
+   CID_ID               int                  not null,
+   BAI_ID               int                  not null,
+   END_LOGRADOURO       varchar(250)         null,
+   END_NUMERO           varchar(90)          null,
+   END_COMPLEMENTO      varchar(60)          null,
+   END_CEP              char(9)              null,
+   constraint PK_ENDERECO primary key (PES_ID)
+)
+go
+
+/*==============================================================*/
+/* Index: ENDERECO_CIDADE_FK                                    */
+/*==============================================================*/
+create index ENDERECO_CIDADE_FK on ENDERECO (
+CID_ID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: ENDERECO_BAIRRO_FK                                    */
+/*==============================================================*/
+create index ENDERECO_BAIRRO_FK on ENDERECO (
+BAI_ID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: E_MAIL                                                */
+/*==============================================================*/
+create table E_MAIL (
+   MAI_ID               int                  identity,
+   PES_ID               int                  not null,
+   MAI_ENDERECO         varchar(200)         null,
+   MAI_SPAM             bit                  null,
+   constraint PK_E_MAIL primary key nonclustered (MAI_ID)
+)
+go
+
+/*==============================================================*/
+/* Index: E_MAIL_PESSOA_FK                                      */
+/*==============================================================*/
+create index E_MAIL_PESSOA_FK on E_MAIL (
+PES_ID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: PESSOA                                                */
+/*==============================================================*/
+create table PESSOA (
+   PES_ID               int                  identity,
+   PES_NOME             varchar(81)          null,
+   constraint PK_PESSOA primary key nonclustered (PES_ID)
+)
+go
+
+/*==============================================================*/
+/* Table: PESSOA_FISICA                                         */
+/*==============================================================*/
+create table PESSOA_FISICA (
+   PES_ID               int                  not null,
+   PES_CPF              char(14)             null,
+   PES_IDENTIDADE       char(18)             null,
+   constraint PK_PESSOA_FISICA primary key (PES_ID)
+)
+go
+
+/*==============================================================*/
+/* Table: PESSOA_JURIDICA                                       */
+/*==============================================================*/
+create table PESSOA_JURIDICA (
+   PES_ID               int                  not null,
+   PES_CNPJ             char(20)             null,
+   PES_NOME_FANTASIA    varchar(150)         null,
+   constraint PK_PESSOA_JURIDICA primary key (PES_ID)
+)
+go
+
+/*==============================================================*/
+/* Table: TELEFONE                                              */
+/*==============================================================*/
+create table TELEFONE (
+   TEL_ID               int                  identity,
+   PES_ID               int                  not null,
+   TEL_NUMERO           varchar(16)          null,
+   TEL_OPERADORA        varchar(60)          null,
+   TEL_SMS              bit                  null,
+   constraint PK_TELEFONE primary key nonclustered (TEL_ID)
+)
+go
+
+/*==============================================================*/
+/* Index: TELEFONE_PESSOA_FK                                    */
+/*==============================================================*/
+create index TELEFONE_PESSOA_FK on TELEFONE (
+PES_ID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: USUARIO                                               */
+/*==============================================================*/
+create table USUARIO (
+   PES_ID               int                  not null,
+   USE_SENHA            varchar(90)          null,
+   USE_LOGIN            varchar(190)         null,
+   USE_ATIVO            bit                  null,
+   USE_CARGO            varchar(90)          null,
+   constraint PK_USUARIO primary key (PES_ID)
+)
+go
+
+/*==============================================================*/
+/* Table: VENDEDOR                                              */
+/*==============================================================*/
+create table VENDEDOR (
+   PES_ID               int                  not null,
+   VEN_DESCRICAO        varchar(150)         null,
+   constraint PK_VENDEDOR primary key (PES_ID)
+)
+go
+
+alter table CLIENTE
+   add constraint FK_CLIENTE_PESSOA_CL_PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
+
+alter table CLIENTE
+   add constraint FK_CLIENTE_VENDEDOR__VENDEDOR foreign key (VEN_PES_ID)
+      references VENDEDOR (PES_ID)
+go
+
+alter table ENDERECO
+   add constraint FK_ENDERECO_ENDERECO__BAIRRO foreign key (BAI_ID)
+      references BAIRRO (BAI_ID)
+go
+
+alter table ENDERECO
+   add constraint FK_ENDERECO_ENDERECO__CIDADE foreign key (CID_ID)
+      references CIDADE (CID_ID)
+go
+
+alter table ENDERECO
+   add constraint FK_ENDERECO_ENDERECO__PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
+
+alter table E_MAIL
+   add constraint FK_E_MAIL_E_MAIL_PE_PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
+
+alter table PESSOA_FISICA
+   add constraint FK_PESSOA_F_PESSOA_PE_PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
+
+alter table PESSOA_JURIDICA
+   add constraint FK_PESSOA_J_PESSOA_PE_PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
+
+alter table TELEFONE
+   add constraint FK_TELEFONE_TELEFONE__PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
+
+alter table USUARIO
+   add constraint FK_USUARIO_PESSOA_US_PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
+
+alter table VENDEDOR
+   add constraint FK_VENDEDOR_PESSOA_VE_PESSOA foreign key (PES_ID)
+      references PESSOA (PES_ID)
+go
