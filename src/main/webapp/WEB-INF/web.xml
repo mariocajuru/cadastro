@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>agenda</display-name>
+	<display-name>cadastro</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
@@ -15,8 +15,6 @@
 	<filter-mapping>
 		<filter-name>conexaoFilter</filter-name>
 		<url-pattern>*.jsf</url-pattern>
-		<url-pattern>*.html</url-pattern>
-		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 
 <servlet>
@@ -49,11 +47,15 @@
 			/WEB-INF/applicationContext-security.xml
 		</param-value>
 	</context-param>
-
-	<context-param>
+	 <context-param>
+    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  	<context-param>
 		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-		<param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
+		<param-value>/WEB-INF/springsecurity.taglib.xml;/WEB-INF/tags.cadastro.xml</param-value>
 	</context-param>
+
 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
