@@ -8,13 +8,24 @@
 
 <ui:composition template="/templates/principal.xhtml">
 	<ui:define name="corpo">
+	
+		<script type="text/javascript" src="../resources/js/angular.min.js"></script>
+		<script type="text/javascript">
+        	angular.module('myApp', []);
+   			angular.element(document).ready(function() {
+    		angular.bootstrap(document, ['myApp']);
+    		});
+  		</script>
+  		
 		<h:form id="form">
 		 
 		 
-		 
+		 <input id="teste" ng-model="name"/>
+		 <h2>hello {{name}} </h2>
 		 
 		 
 		</h:form>
+	
 	</ui:define>
 </ui:composition>
 </html>
