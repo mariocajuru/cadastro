@@ -25,12 +25,12 @@
 		<h:outputStylesheet library="css"
 			name="font-awesome.css" />
 
-<!-- 		<h:outputStylesheet library="css" name="renovar-base.css" /> -->
+		<h:outputStylesheet library="css" name="cadastro-base.css" />
 		<h:outputStylesheet library="css" name="sb-admin.css" />
 		<h:outputStylesheet library="css" name="plugins/morris.css" />
 		  <!-- Custom Fonts -->
-    <link href="../resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-
+	<!-- 	  <h:outputStylesheet library="plugins" name="font-awesome/css/font-awesome.min.css" /> -->
+  
 		<h:outputScript library="primefaces" name="jquery/jquery.js" />
 		<h:outputScript library="js" name="bootstrap-maxlength.min.js" />
 		<h:outputScript library="js" name="bootstrap.min.js" />
@@ -39,9 +39,9 @@
 		<h:outputScript library="francisco" name="generic.js" /> -->
 		
 		  <!-- Morris Charts JavaScript -->
-   <h:outputScript library="js/plugins/morris" name="raphael.min.js"/>
+<!--    <h:outputScript library="js/plugins/morris" name="raphael.min.js"/>
     <h:outputScript library="js/plugins/morris" name="morris.min.js"/> 
-   <h:outputScript library="js/plugins/morris" name="morris-data.js"/>	
+   <h:outputScript library="js/plugins/morris" name="morris-data.js"/>	 -->
 
 
 	</h:head>
@@ -171,10 +171,10 @@
                         <a href="#{request.contextPath}/publico/error.jsf"><i class="fa fa-fw fa-dashboard"></i> Error</a>
                     </li>
                     <li>
-                        <a href="#{request.contextPath}/restrito/teste.jsf"><i class="fa fa-fw fa-bar-chart-o"></i> Teste</a>
+                        <a href="#{request.contextPath}/restrito/pessoa/consulta.jsf"><i class="fa fa-fw fa-bar-chart-o"></i> Pessoa</a>
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                        <a href="#{request.contextPath}/restrito/vendedor/consulta.jsf"><i class="fa fa-fw fa-table"></i> Vendedor</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>

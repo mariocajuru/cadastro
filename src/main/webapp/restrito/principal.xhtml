@@ -295,7 +295,13 @@
 		<!-- Usuário logado:#{request.remoteUser}
 		<br/>
 		Nome do usuário logado #{contextoBean.usuarioLogado.pessoa.pesNome} -->
-	</h:form>
+		
+		 <!-- Morris Charts JavaScript -->
+			<h:outputScript library="js/plugins/morris" name="raphael.min.js" />
+			<h:outputScript library="js/plugins/morris" name="morris.min.js" />
+			<h:outputScript library="js/plugins/morris" name="morris-data.js" />
+
+		</h:form>
 	
 </ui:define>
 </ui:composition>
