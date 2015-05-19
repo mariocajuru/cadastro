@@ -26,10 +26,12 @@ import br.com.mario.cadastro.rn.PessoaFisicaRN;
 import br.com.mario.cadastro.rn.PessoaJuridicaRN;
 import br.com.mario.cadastro.rn.PessoaRN;
 import br.com.mario.cadastro.rn.TelefoneRN;
+import br.com.mario.cadastro.util.ContextoBean;
+import br.com.mario.cadastro.util.ContextoUtil;
 
 @ManagedBean(name = "pessoaBean")
 @ViewScoped
-public class PessoaBean extends GenericBean implements Serializable{
+public class PessoaBean implements Serializable{
 
 	/**
 	 * 
@@ -47,6 +49,8 @@ public class PessoaBean extends GenericBean implements Serializable{
 	@Getter @Setter	private List<Pessoa> listaPessoas;
 	@Setter	private List<Telefone> listaTelefones;
 	@Setter	private List<EMail> listaEmails;
+	
+	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
 
 	@Getter @Setter	private Boolean alteracao=false;
 
@@ -58,14 +62,14 @@ public class PessoaBean extends GenericBean implements Serializable{
 		this.telefone=new Telefone();
 		this.email=new EMail();
 		
-		String paginaAtual = super.getPaginaAtual();
+		String paginaAtual = this.genericBean.getPaginaAtual();
 
 		if (paginaAtual.contains("restrito/pessoa/consulta")) {
 			this.listaPessoas=new PessoaRN().listar();
 		}
 
 		if (paginaAtual.contains("restrito/pessoa/cadastro")) {
-			int pessoaID = super.getParametro("id", -1);
+			int pessoaID = this.genericBean.getParametro("id", -1);
 
 			if (pessoaID <= 0) {
 				alteracao = false;
@@ -167,7 +171,7 @@ public class PessoaBean extends GenericBean implements Serializable{
 			eMailRN.salvar(mail);
 		}
 
-		super.redirecionarParaPagina("restrito/pessoa/consulta.jsf");
+		this.genericBean.redirecionarParaPagina("restrito/pessoa/consulta.jsf");
 	}
 
 

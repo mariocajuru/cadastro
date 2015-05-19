@@ -34,9 +34,7 @@
 		<h:outputScript library="primefaces" name="jquery/jquery.js" />
 		<h:outputScript library="js" name="bootstrap-maxlength.min.js" />
 		<h:outputScript library="js" name="bootstrap.min.js" />
-	<!--	<h:outputScript library="js" name="jquery.metisMenu.js" />
-	 	<h:outputScript library="js" name="menu-renovar.js" />
-		<h:outputScript library="francisco" name="generic.js" /> -->
+		<h:outputScript library="js" name="generic.js" />
 		
 		  <!-- Morris Charts JavaScript -->
 <!--    <h:outputScript library="js/plugins/morris" name="raphael.min.js"/>
@@ -60,7 +58,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <sec:authorize ifAllGranted="ROLE_ADMIN">
-                <a class="navbar-brand" href="#{request.contextPath}/restrito/principal.jsf">CONTROLE</a>
+                <a class="navbar-brand" href="#{request.contextPath}/restrito/principal.jsf"><i class="fa fa-fw fa-dashboard"></i> CONTROLE</a>
                 </sec:authorize>
             </div>
             <!-- Top Menu Items -->
@@ -167,10 +165,8 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
+
                     <li class="active">
-                        <a href="#{request.contextPath}/publico/error.jsf"><i class="fa fa-fw fa-dashboard"></i> Error</a>
-                    </li>
-                    <li>
                         <a href="#{request.contextPath}/restrito/pessoa/consulta.jsf"><i class="fa fa-fw fa-bar-chart-o"></i> Pessoa</a>
                     </li>
                     <li>

@@ -15,9 +15,11 @@ import lombok.Setter;
 import br.com.mario.cadastro.modelo.Pessoa;
 import br.com.mario.cadastro.modelo.Usuario;
 import br.com.mario.cadastro.rn.UsuarioRN;
-@ManagedBean(name = "funcionarioBean")
+import br.com.mario.cadastro.util.ContextoBean;
+import br.com.mario.cadastro.util.ContextoUtil;
+@ManagedBean(name = "usuarioBean")
 @ViewScoped
-public class UsuarioBean extends GenericBean implements Serializable{
+public class UsuarioBean implements Serializable{
 
 	/**
 	 * 
@@ -34,13 +36,15 @@ public class UsuarioBean extends GenericBean implements Serializable{
 	@Getter @Setter	private List<Pessoa> listaPessoasNaoFuncionarios;
 	@Getter @Setter	private List<String> permissoes;
 	
+	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
+	
 	@PostConstruct
 	public void init(){
 		UsuarioRN usuarioRN = new UsuarioRN();
 		this.usuario=new Usuario();
 		this.pessoa=new Pessoa();
 		
-		String paginaAtual = super.getPaginaAtual();
+		String paginaAtual = this.genericBean.getPaginaAtual();
 
 		if (paginaAtual.contains("admin/funcionario/consulta")) {
 			this.listaFuncionarios=usuarioRN.listarUsuarioPessoas();
@@ -51,7 +55,7 @@ public class UsuarioBean extends GenericBean implements Serializable{
 			
 			this.listaPessoasNaoFuncionarios=usuarioRN.listaPessoasNaoUsuario();
 			
-			int usuarioID = super.getParametro("id", -1);
+			int usuarioID = this.genericBean.getParametro("id", -1);
 
 			if (usuarioID <= 0) {
 				setAlteracao(false);
@@ -76,19 +80,19 @@ public class UsuarioBean extends GenericBean implements Serializable{
 		if((this.pessoa==null)||(this.pessoa.getPesId()<1)){
 			this.senha=new String();
 			this.confirmaSenha=new String();
-			super.mostrarErro("Selecione o funcionário ");
+			this.genericBean.mostrarErro("Selecione o funcionário ");
 			return ;
 		}
 		
 		if(this.usuario.getUseCargo()==null || this.usuario.getUseCargo()==""){
-			super.mostrarErro("Campo Cargo obrigatorio");
+			this.genericBean.mostrarErro("Campo Cargo obrigatorio");
 			return ;
 		}
 		
 		if (!this.senha.equals(this.confirmaSenha)) {
 			this.senha=new String();
 			this.confirmaSenha=new String();
-			super.mostrarErro("A senha não foi confirmada corretamente");
+			this.genericBean.mostrarErro("A senha não foi confirmada corretamente");
 			return ;
 		}
 
@@ -98,14 +102,14 @@ public class UsuarioBean extends GenericBean implements Serializable{
 		if(user!=null){
 			if(this.alteracao){
 				if(user.getPesId()!=this.usuario.getPesId()){
-					super.mostrarErro("Esse login já existe no sistema. Pertence ao Sr."+user.getPessoa().getPesNome());
+					this.genericBean.mostrarErro("Esse login já existe no sistema. Pertence ao Sr."+user.getPessoa().getPesNome());
 					return ;
 				}else{
 					//eliminado objeto da session
-					super.evict(user);
+					this.genericBean.evict(user);
 				}
 			}else{
-				super.mostrarErro("Esse login já existe no sistema. Pertence ao Sr."+user.getPessoa().getPesNome());
+				this.genericBean.mostrarErro("Esse login já existe no sistema. Pertence ao Sr."+user.getPessoa().getPesNome());
 				return ;
 			}
 		}
@@ -120,6 +124,6 @@ public class UsuarioBean extends GenericBean implements Serializable{
 		this.usuario.setUseAtivo(true);
 		usuarioRN.salvar(this.usuario);
 		
-		super.redirecionarParaPagina("admin/funcionario/consulta.jsf");
+		this.genericBean.redirecionarParaPagina("admin/funcionario/consulta.jsf");
 	}
 }

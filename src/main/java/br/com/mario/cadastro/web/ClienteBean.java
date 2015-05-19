@@ -17,10 +17,11 @@ import br.com.mario.cadastro.modelo.Endereco;
 import br.com.mario.cadastro.modelo.Pessoa;
 import br.com.mario.cadastro.rn.ClienteRN;
 import br.com.mario.cadastro.rn.PessoaRN;
+import br.com.mario.cadastro.util.*;
 
 @ManagedBean(name = "clienteBean")
 @ViewScoped
-public class ClienteBean extends GenericBean implements Serializable{
+public class ClienteBean implements Serializable{
 
 	/**
 	 * 
@@ -31,6 +32,7 @@ public class ClienteBean extends GenericBean implements Serializable{
 	@Getter @Setter private Bairro bairro;
 	@Getter @Setter private Cidade cidade;
 	@Getter @Setter	private Character tipoPessoa=new Character('F');
+	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
 	
 	@Getter @Setter private Cliente cliente;
 	
@@ -41,7 +43,7 @@ public class ClienteBean extends GenericBean implements Serializable{
 	public void init(){
 		this.pessoa=new Pessoa();
 		
-		String paginaAtual = super.getPaginaAtual();
+		String paginaAtual = this.genericBean.getPaginaAtual();
 		
 		PessoaRN pessoaRN=new PessoaRN();
 		
@@ -70,7 +72,7 @@ public class ClienteBean extends GenericBean implements Serializable{
 		}
 		
 		if (paginaAtual.contains("restrito/cliente/cadastro")) {
-			int pessoaID = super.getParametro("id", -1);
+			int pessoaID = this.genericBean.getParametro("id", -1);
 			
 			this.pessoa=pessoaRN.carregar(pessoaID);
 			
@@ -93,7 +95,7 @@ public class ClienteBean extends GenericBean implements Serializable{
 		}
 		
 		if (paginaAtual.contains("restrito/cliente/vistoria")) {
-			int pessoaID = super.getParametro("id", -1);
+			int pessoaID = this.genericBean.getParametro("id", -1);
 			
 			this.pessoa=pessoaRN.carregar(pessoaID);
 			
