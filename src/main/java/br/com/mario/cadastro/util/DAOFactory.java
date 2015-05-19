@@ -19,6 +19,8 @@ import br.com.mario.cadastro.dao.TelefoneDAO;
 import br.com.mario.cadastro.dao.TelefoneDAOHibernate;
 import br.com.mario.cadastro.dao.UsuarioDAO;
 import br.com.mario.cadastro.dao.UsuarioDAOHibernate;
+import br.com.mario.cadastro.dao.VendedorDAO;
+import br.com.mario.cadastro.dao.VendedorDAOHibernate;
 
 
 public class DAOFactory {
@@ -88,5 +90,12 @@ public class DAOFactory {
 		mailDAOHibernate.setSession(HibernateUtil.getSessionFactory()
 				.getCurrentSession());
 		return mailDAOHibernate;
+	}
+	
+	public static VendedorDAO criarVendedorDAO() {
+		VendedorDAOHibernate vendedorDAOHibernate  = new VendedorDAOHibernate();
+		vendedorDAOHibernate.setSession(HibernateUtil.getSessionFactory()
+				.getCurrentSession());
+		return vendedorDAOHibernate;
 	}
 }
