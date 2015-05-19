@@ -7,9 +7,10 @@
 	maxIdle="30"
 	maxWait="10000"
 	username="sa"
-	password="RENOVAR@2013"
+	password="122404"
 	driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-	url="jdbc:sqlserver://desenvjava01\sqlexpress:1433;databaseName=cadastro;autoReconnect=true;autoReconnectForPools=true"/>
+	url="jdbc:sqlserver://Vilela:1433;databaseName=cadastro;autoReconnect=true;autoReconnectForPools=true"/>
+
 
  <Resource
 		name="mail/Session"

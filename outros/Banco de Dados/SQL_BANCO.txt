@@ -419,3 +419,6 @@ alter table VENDEDOR
    add constraint FK_VENDEDOR_PESSOA_VE_PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
 go
+
+CREATE SCHEMA log
+AUTHORIZATION dbo

@@ -20,10 +20,19 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		
+		 <!-- 
+        http://www.guj.com.br/4797-hibernatecfgxml - - hibernate-42 - - sql-server-2008
+        -->
 		 <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider
         </property>
         
+        	<!--Configuração hibernate envers  -->
+		<property name="org.hibernate.envers.audit_table_suffix">_AUD</property>
+		<property name="org.hibernate.envers.default_schema">log</property>
+		<property name="org.hibernate.envers.default_catalog">cadastro</property>
+		<property name="org.hibernate.envers.revision_on_collection_change">false</property>
+		
     
         <mapping class="br.com.mario.cadastro.modelo.EMail" />
 		<mapping class="br.com.mario.cadastro.modelo.Usuario" />		
