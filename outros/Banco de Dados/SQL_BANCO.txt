@@ -368,6 +368,7 @@ go
 alter table CLIENTE
    add constraint FK_CLIENTE_PESSOA_CL_PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
 
 alter table CLIENTE
@@ -388,37 +389,45 @@ go
 alter table ENDERECO
    add constraint FK_ENDERECO_ENDERECO__PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
 
 alter table E_MAIL
    add constraint FK_E_MAIL_E_MAIL_PE_PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
 
 alter table PESSOA_FISICA
    add constraint FK_PESSOA_F_PESSOA_PE_PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
 
 alter table PESSOA_JURIDICA
    add constraint FK_PESSOA_J_PESSOA_PE_PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
 
 alter table TELEFONE
    add constraint FK_TELEFONE_TELEFONE__PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
 
 alter table USUARIO
    add constraint FK_USUARIO_PESSOA_US_PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
 
 alter table VENDEDOR
    add constraint FK_VENDEDOR_PESSOA_VE_PESSOA foreign key (PES_ID)
       references PESSOA (PES_ID)
+         on delete cascade
 go
+
 
 CREATE SCHEMA log
 AUTHORIZATION dbo

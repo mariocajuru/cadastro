@@ -256,9 +256,7 @@ public class PessoaBean implements Serializable{
 	
 	
 	public void excluir(){
-		
 		new PessoaRN().excluir(this.pessoa);
-
 		this.genericBean.redirecionarParaPagina("restrito/pessoa/consulta.jsf");
 	}
 

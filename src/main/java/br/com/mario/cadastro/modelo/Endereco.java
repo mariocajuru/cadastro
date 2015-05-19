@@ -2,6 +2,7 @@ package br.com.mario.cadastro.modelo;
 
 // Generated 16/05/2015 14:37:37 by Hibernate Tools 4.3.1
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -93,7 +94,7 @@ public class Endereco implements java.io.Serializable {
 		this.cidade = cidade;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	public Pessoa getPessoa() {
 		return this.pessoa;

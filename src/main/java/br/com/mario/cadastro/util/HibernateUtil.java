@@ -1,9 +1,9 @@
 package br.com.mario.cadastro.util;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
 public class HibernateUtil {
 
@@ -14,9 +14,9 @@ public class HibernateUtil {
 			Configuration configuration = new Configuration();
 			configuration.configure("hibernate.cfg.xml");
 			
-			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-					.applySettings(configuration.getProperties())
-					.buildServiceRegistry();
+			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+            .applySettings(configuration.getProperties())
+            .build();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 			
 			//http://www.guj.com.br/4797-hibernatecfgxml--hibernate-42--sql-server-2008
