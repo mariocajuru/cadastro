@@ -92,4 +92,13 @@
 		<error-code>403</error-code>
 		<location>/publico/acessorestrito.jsf</location>
 	</error-page>
+	
+	<!-- E-MAIL -->
+	 <resource-ref>
+    <description>Mail Session</description>
+    <res-ref-name>mail/Session</res-ref-name>
+    <res-type>javax.mail.Session</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  <display-name>web-service</display-name>
 	</web-app>

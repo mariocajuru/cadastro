@@ -10,4 +10,14 @@
 	password="RENOVAR@2013"
 	driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 	url="jdbc:sqlserver://desenvjava01\sqlexpress:1433;databaseName=cadastro;autoReconnect=true;autoReconnectForPools=true"/>
+
+ <Resource
+		name="mail/Session"
+		auth="Container"
+		type="javax.mail.Session"
+		mail.smtp.host="mail.servidor.com.br"
+		mail.smtp.port="25"
+		mail.smtp.auth="true"
+		mail.smtp.user="teste@servidor.com.br"
+		mail.smtp.password="teste"/>
 </Context>

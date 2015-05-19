@@ -14,8 +14,10 @@ import org.springframework.util.DigestUtils;
 
 import lombok.Getter;
 import lombok.Setter;
+import br.com.mario.cadastro.modelo.EMail;
 import br.com.mario.cadastro.modelo.Pessoa;
 import br.com.mario.cadastro.modelo.Usuario;
+import br.com.mario.cadastro.rn.EMailRN;
 import br.com.mario.cadastro.rn.UsuarioRN;
 import br.com.mario.cadastro.util.ContextoBean;
 import br.com.mario.cadastro.util.ContextoUtil;
@@ -128,6 +130,19 @@ public class UsuarioBean implements Serializable{
 		this.usuario.setPessoa(this.pessoa);
 		this.usuario.setUseAtivo(true);
 		usuarioRN.salvar(this.usuario);
+		
+		EmailBean mail=new EmailBean();
+		mail.setAssunto("Sistema de cadastro do usuário");
+		mail.setDe("mariocajuru@gmail.com");
+		EMailRN e_mail=new EMailRN();
+		List<EMail> listaEmail=e_mail.carregarEmailsPorPessoa(this.pessoa);
+
+		for(EMail e: listaEmail){
+			mail.setPara(e.getMaiEndereco());
+			mail.setMensagem("Olá caro "+pessoa.getPesNome()+" sua senha é: "+this.senha+
+					", login: "+this.usuario.getUseLogin());
+			mail.enviarEmail();
+		}
 		
 		this.genericBean.redirecionarParaPagina("admin/usuario/consulta.jsf");
 	}

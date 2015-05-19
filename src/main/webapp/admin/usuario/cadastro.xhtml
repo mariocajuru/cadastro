@@ -106,6 +106,13 @@
 			<ui:include src="/admin/usuario/fragments/permissoes.xhtml" />
 
 			<hr />
+			
+			<p:ajaxStatus onstart="PF('dialogAguarde').show()"
+				oncomplete="dialogAguarde.hide();" />
+			<p:dialog widgetVar="dialogAguarde" showHeader="false"
+				resizable="false" closable="false" >
+                Aguarde, enviando e-mail com os dados de usuário ao e-mail cadastrado.
+            </p:dialog>
 
 			<div class="row" style="text-align: center">
 
