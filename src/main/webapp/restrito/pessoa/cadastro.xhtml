@@ -146,6 +146,10 @@
 						
 						<p:commandButton id="limpar" value="Limpar" type="button" onclick="javascript: window.location.assign('cadastro.jsf');" 
 						class="btn btn-default btn-lg"/>
+						
+					<p:commandButton value="Excluir" action="#{pessoaBean.excluir}"
+						class="btn btn-default btn-lg" update="@form" rendered="#{pessoaBean.pessoa.pesId == 0 ? 'false' : (pessoaBean.pessoa.usuario == null ? 'true' : 'false')}"/>
+
 				</div>
 
 			</div>

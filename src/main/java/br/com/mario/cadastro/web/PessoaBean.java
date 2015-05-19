@@ -67,6 +67,14 @@ public class PessoaBean implements Serializable{
 		if (paginaAtual.contains("restrito/pessoa/consulta")) {
 			this.listaPessoas=new PessoaRN().listar();
 		}
+		
+		if (paginaAtual.contains("restrito/pessoa/consulta_vendedor")) {
+			this.listaPessoas=new PessoaRN().listar();
+			for(Pessoa p: this.listaPessoas){
+				if(p.getVendedor()==null)
+					this.listaPessoas.remove(p);
+			}
+		}
 
 		if (paginaAtual.contains("restrito/pessoa/cadastro")) {
 			int pessoaID = this.genericBean.getParametro("id", -1);
@@ -245,5 +253,14 @@ public class PessoaBean implements Serializable{
 			this.telefone = new Telefone();			
 		}
 	}
+	
+	
+	public void excluir(){
+		
+		new PessoaRN().excluir(this.pessoa);
+
+		this.genericBean.redirecionarParaPagina("restrito/pessoa/consulta.jsf");
+	}
+
 
 }

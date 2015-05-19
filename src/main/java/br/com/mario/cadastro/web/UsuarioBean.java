@@ -146,4 +146,17 @@ public class UsuarioBean implements Serializable{
 		
 		this.genericBean.redirecionarParaPagina("admin/usuario/consulta.jsf");
 	}
+	
+	public void ativar() {
+
+		if (this.usuario.getUseAtivo() == true) {
+			this.usuario.setUseAtivo(false);
+		} else {
+			this.usuario.setUseAtivo(true);
+		}
+
+		new UsuarioRN().salvar(this.usuario);
+		
+		this.genericBean.redirecionarParaPagina("admin/usuario/consulta.jsf");
+	}
 }
