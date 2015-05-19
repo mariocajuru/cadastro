@@ -175,9 +175,11 @@
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
                     </li>
+                    <sec:authorize ifAllGranted="ROLE_ADMIN">
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        <a href="#{request.contextPath}/admin/usuario/consulta.jsf"><i class="fa fa-fw fa-desktop"></i> Usuários</a>
                     </li>
+                    </sec:authorize>
                     <li>
                         <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
                     </li>

@@ -201,7 +201,7 @@ go
 /* Table: BAIRRO                                                */
 /*==============================================================*/
 create table BAIRRO (
-   BAI_ID               int                  not null,
+   BAI_ID               int                  identity,
    BAI_NOME             varchar(150)         null,
    BAI_REGIAO           varchar(50)          null,
    constraint PK_BAIRRO primary key nonclustered (BAI_ID)
@@ -212,7 +212,7 @@ go
 /* Table: CIDADE                                                */
 /*==============================================================*/
 create table CIDADE (
-   CID_ID               int                  not null,
+   CID_ID               int                  identity,
    CID_NOME             varchar(150)         null,
    CID_UF               char(2)              null,
    constraint PK_CIDADE primary key nonclustered (CID_ID)
@@ -347,7 +347,7 @@ go
 /*==============================================================*/
 create table USUARIO (
    PES_ID               int                  not null,
-   USE_SENHA            varchar(90)          null,
+   USE_SENHA            varchar(900)         null,
    USE_LOGIN            varchar(190)         null,
    USE_ATIVO            bit                  null,
    USE_CARGO            varchar(90)          null,

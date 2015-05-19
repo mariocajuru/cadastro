@@ -79,7 +79,7 @@ public class Usuario implements java.io.Serializable {
 		this.pessoa = pessoa;
 	}
 
-	@Column(name = "USE_SENHA", length = 90)
+	@Column(name = "USE_SENHA", length = 900)
 	public String getUseSenha() {
 		return this.useSenha;
 	}

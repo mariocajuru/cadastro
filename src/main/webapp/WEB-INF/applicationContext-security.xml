@@ -7,7 +7,7 @@
                         http://www.springframework.org/schema/security 
                         http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 	<http>
-    <intercept-url pattern="/restrito/**" access="ROLE_USUARIO, ROLE_ADMIN, ROLE_CAPTADOR, ROLE_USER" />
+    <intercept-url pattern="/restrito/**" access="ROLE_VENDEDOR, ROLE_ADMIN" />
 	<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 	<form-login login-page="/publico/login.jsf"
 		always-use-default-target="true" default-target-url="/restrito/principal.jsf"
@@ -18,6 +18,7 @@
 
 	<authentication-manager>
 		<authentication-provider>
+		<password-encoder hash="md5"/>
 		<jdbc-user-service data-source-ref="cadastroDataSource"
 				users-by-username-query="SELECT use_login as username, use_senha as password, 'true' as enable FROM Usuario WHERE use_login = ? and use_ativo='True'"
 				authorities-by-username-query="SELECT f.use_login as username, p.PERMISSAO as authority FROM Usuario f, USUARIO_PERMISSAO p WHERE f.PES_ID = p.USUARIO and f.use_login = ?" /> 

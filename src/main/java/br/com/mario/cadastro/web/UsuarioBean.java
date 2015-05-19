@@ -10,6 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.springframework.util.DigestUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 import br.com.mario.cadastro.modelo.Pessoa;
@@ -32,8 +34,8 @@ public class UsuarioBean implements Serializable{
 	@Getter @Setter	private String loguin;
 	@Getter @Setter boolean alteracao=false;
 	
-	@Getter @Setter	private List<Pessoa> listaFuncionarios;
-	@Getter @Setter	private List<Pessoa> listaPessoasNaoFuncionarios;
+	@Getter @Setter	private List<Pessoa> listaUsuarios;
+	@Getter @Setter	private List<Pessoa> listaPessoasNaoUsuarios;
 	@Getter @Setter	private List<String> permissoes;
 	
 	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
@@ -46,14 +48,14 @@ public class UsuarioBean implements Serializable{
 		
 		String paginaAtual = this.genericBean.getPaginaAtual();
 
-		if (paginaAtual.contains("admin/funcionario/consulta")) {
-			this.listaFuncionarios=usuarioRN.listarUsuarioPessoas();
+		if (paginaAtual.contains("admin/usuario/consulta")) {
+			this.listaUsuarios=usuarioRN.listarUsuarioPessoas();
 		}
 
-		if (paginaAtual.contains("admin/funcionario/cadastro")) {
+		if (paginaAtual.contains("admin/usuario/cadastro")) {
 			this.permissoes=new ArrayList<String>();
 			
-			this.listaPessoasNaoFuncionarios=usuarioRN.listaPessoasNaoUsuario();
+			this.listaPessoasNaoUsuarios=usuarioRN.listaPessoasNaoUsuario();
 			
 			int usuarioID = this.genericBean.getParametro("id", -1);
 
@@ -80,7 +82,7 @@ public class UsuarioBean implements Serializable{
 		if((this.pessoa==null)||(this.pessoa.getPesId()<1)){
 			this.senha=new String();
 			this.confirmaSenha=new String();
-			this.genericBean.mostrarErro("Selecione o funcionário ");
+			this.genericBean.mostrarErro("Selecione o usuário ");
 			return ;
 		}
 		
@@ -119,11 +121,14 @@ public class UsuarioBean implements Serializable{
 			this.usuario.getPermissao().add(per);
 		}
 		this.usuario.setUseLogin(loguin);
-		this.usuario.setUseSenha(this.senha);
+		if(!this.senha.equals("")){
+			String senhaCripto = DigestUtils.md5DigestAsHex(senha.getBytes());
+			this.usuario.setUseSenha(senhaCripto);
+		}
 		this.usuario.setPessoa(this.pessoa);
 		this.usuario.setUseAtivo(true);
 		usuarioRN.salvar(this.usuario);
 		
-		this.genericBean.redirecionarParaPagina("admin/funcionario/consulta.jsf");
+		this.genericBean.redirecionarParaPagina("admin/usuario/consulta.jsf");
 	}
 }
