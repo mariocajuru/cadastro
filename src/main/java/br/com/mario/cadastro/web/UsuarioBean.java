@@ -139,7 +139,7 @@ public class UsuarioBean implements Serializable{
 
 		for(EMail e: listaEmail){
 			mail.setPara(e.getMaiEndereco());
-			mail.setMensagem("Olá caro "+pessoa.getPesNome()+" sua senha é: "+this.senha+
+			mail.setMensagem("Olá caro "+this.usuario.getPessoa().getPesNome()+" sua senha é: "+this.senha+
 					", login: "+this.usuario.getUseLogin());
 			mail.enviarEmail();
 		}
