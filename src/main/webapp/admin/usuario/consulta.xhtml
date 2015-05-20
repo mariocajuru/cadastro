@@ -50,10 +50,11 @@
 				},
 				columns: [
 					{ field: 'recid', caption: 'Código', size: '60px', sortable: true, resizable: true },
-				    { field: 'nome', caption: 'Nome', size: '200px', sortable: true, resizable: true },
-				    { field: 'cargo', caption: 'CARGO', size: '130px', sortable: true, resizable: true },
+				    { field: 'nome', caption: 'Nome', size: '300px', sortable: true, resizable: true },
+				    { field: 'cargo', caption: 'CARGO', size: '190px', sortable: true, resizable: true },
 				    { field: 'loguin', caption: 'LOGIN', size: '130px', sortable: true, resizable: true },
 				    { field: 'ativo', caption: 'ATIVO ?', size: '80px', sortable: true, resizable: true },
+				    { field: 'descricao', caption: 'DESCRIÇÃO', size: '300px', sortable: true, resizable: true },
 				],
 			   onExpand: function (event) {
 					var id = event.recid;
@@ -66,6 +67,7 @@
 					{ type: 'text',  field: 'cargo',      caption: 'CARGO' },
 					{ type: 'text',  field: 'loguin',   caption: 'LOGUIN' },
 					{ type: 'text',  field: 'ativo',   caption: 'ATIVO ?' },
+					{ type: 'text',  field: 'descricao',   caption: 'DESCRIÇÃO' },
 				],
 				records: [
 							
@@ -74,6 +76,7 @@
 							recid: #{fun.pesId}, 
 							nome: '#{fun.getPesNome()}', 
 							cargo:'#{fun.usuario.useCargo}',
+							descricao:'#{fun.vendedor.venDescricao}',
 							loguin:'#{fun.usuario.useLogin}',
 							permissoes:'#{fun.usuario.permissao}',
 							ativo:'#{fun.usuario.useAtivo ? 'ATIVO' : 'NÃO ATIVO'}',
