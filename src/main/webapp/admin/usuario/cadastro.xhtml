@@ -57,7 +57,7 @@
 
 
 			<div class="row">
-
+			<!-- <p:focus for="cargo" context="cargo"/> -->
 				<label class="col-md-1 control-label labelRenovar">CARGO</label>
 				<div class="col-xs-2">
 					<div class="form-group">
@@ -71,10 +71,9 @@
 					</div>
 				</div>
 
-				<label class="col-md-1 control-label labelRenovar">LOGUIN</label>
+				<label class="col-md-2 control-label labelRenovar">LOGUIN</label>
 				<div class="col-xs-2">
 					<div class="form-group">
-						<p:focus for="loguin" context="loguin" />
 						<h:inputText id="loguin" class="form-control input-sm"
 							value="#{usuarioBean.loguin}" size="30" maxlength="30"
 							required="true" requiredMessage="Falta o Login!">
@@ -98,7 +97,7 @@
 						</h:inputSecret>
 					</div>
 				</div>
-				<label class="col-md-1 control-label labelRenovar">CONFIRMAR
+				<label class="col-md-2 control-label labelRenovar">CONFIRMAR
 					SENHA</label>
 				<div class="col-xs-2">
 					<div class="form-group">
@@ -129,17 +128,17 @@
 				<div class="btn-group">
 
 					<p:commandButton value="Salvar" action="#{usuarioBean.salvar}"
-						class="btn btn-default btn-lg" />
+						class="btn btn-default btn-lg" icon="ui-icon-disk"/>
 
 					<p:commandButton class="btn btn-default btn-lg" value="Limpar"
-						onclick="javascript: window.location.assign('cadastro.jsf');" />
+						onclick="javascript: window.location.assign('cadastro.jsf');" icon="ui-icon-document"/>
 
 					<p:commandButton class="btn btn-default btn-lg" value="Ativar"
-						action="#{usuarioBean.ativar}"
+						action="#{usuarioBean.ativar}" icon="ui-icon-unlocked"
 						rendered="#{!usuarioBean.usuario.useAtivo and usuarioBean.alteracao}" />
 
 					<p:commandButton class="btn btn-default btn-lg" value="Desativar"
-						action="#{usuarioBean.ativar}"
+						action="#{usuarioBean.ativar}" icon="ui-icon-locked"
 						rendered="#{usuarioBean.usuario.useAtivo and usuarioBean.alteracao}" />
 				</div>
 
