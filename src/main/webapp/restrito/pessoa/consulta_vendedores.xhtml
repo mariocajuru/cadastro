@@ -16,8 +16,9 @@
 		<h3>Vendedores</h3>
 
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#">Consulta de Vendedores</a></li>
-			<li><a href="cadastro.jsf">Cadastrar Pessoa</a></li>
+			<li class="active"><a href="#"><i class="fa fa-search-plus"></i> Consulta de Vendedores</a></li>
+			<li><a href="consulta.jsf"><i class="fa fa-search-plus"></i> Consulta de Pessoas</a></li>
+			<li><a href="cadastro.jsf"><i class="fa fa-fw fa-edit"></i> Cadastrar Pessoa</a></li>
 		</ul>
 		
 		<br/>
@@ -40,32 +41,32 @@
 					{ field: 'recid', caption: 'Código', size: '60px', sortable: true, resizable: true },
 				    { field: 'nome', caption: 'Nome', size: '200px', sortable: true, resizable: true },
 				    { field: 'cargo', caption: 'CARGO', size: '130px', sortable: true, resizable: true },
-				    { field: 'loguin', caption: 'LOGIN', size: '130px', sortable: true, resizable: true },
-				    { field: 'ativo', caption: 'ATIVO ?', size: '80px', sortable: true, resizable: true },
+				    { field: 'end', caption: 'ENDEREÇO', size: '130px', sortable: true, resizable: true },
+				    { field: 'descricao', caption: 'DESCRIÇÃO', size: '80px', sortable: true, resizable: true },
 				],
 			   onExpand: function (event) {
 					var id = event.recid;
 					var informacoes = w2ui['grid'].get(id);
-					$('#'+event.box_id).html('<div style="padding: 8px;margin:8px; text-align: justify;background-color:lightgrey;border:1px solid black;line-height:1.3;font-size : 9px">'+informacoes['permissoes']+'</div>').animate({ 'height': 200 }, 160);
+					$('#'+event.box_id).html('<div style="padding: 8px;margin:8px; text-align: justify;background-color:lightgrey;border:1px solid black;line-height:1.3;font-size : 9px">'+informacoes['clientes']+'</div>').animate({ 'height': 200 }, 160);
 			    }, 
 				searches: [
 					{ type: 'int',   field: 'recid', caption: 'Código' },
 					{ type: 'text',  field: 'nome', caption: 'Nome' },
-					{ type: 'text',  field: 'cargo',      caption: 'CARGO' },
-					{ type: 'text',  field: 'loguin',   caption: 'LOGUIN' },
-					{ type: 'text',  field: 'ativo',   caption: 'ATIVO ?' },
+					{ type: 'text',  field: 'end',      caption: 'CARGO' },
+					{ type: 'text',  field: 'loguin',   caption: 'ENDEREÇO' },
+					{ type: 'text',  field: 'descricao',   caption: 'DESCRIÇÃO' },
 				],
 				records: [
 							
-					<ui:repeat value="#{usuarioBean.listaUsuarios}" var="fun">
+					<ui:repeat value="#{pessoaBean.listaVendedores}" var="ven">
 						{ 
-							recid: #{fun.pesId}, 
-							nome: '#{fun.getPesNome()}', 
-							cargo:'#{fun.usuario.useCargo}',
-							loguin:'#{fun.usuario.useLogin}',
-							permissoes:'#{fun.usuario.permissao}',
-							ativo:'#{fun.usuario.useAtivo ? 'ATIVO' : 'NÃO ATIVO'}',
-							style: '#{fun.usuario.useAtivo == false ? "background-color: #C2F5B4" : ""}',
+							recid: #{ven.pesId}, 
+							nome: '#{ven.pessoa.getPesNome()}', 
+							cargo:'#{ven.pessoa.usuario.useCargo}',
+							end:'#{ven.pessoa.endereco.endLogradouro} , #{ven.pessoa.endereco.endNumero}',
+							clientes:'#{pessoaBean.clientesPorVendedor(ven.pesId)}',
+							descricao:'#{ven.venDescricao}',
+							style: '#{ven.pessoa.usuario == null ? "background-color: #C2F5B4" : ""}',
 			 },
 					</ui:repeat>
 						

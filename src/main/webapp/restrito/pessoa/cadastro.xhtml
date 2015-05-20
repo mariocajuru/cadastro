@@ -3,7 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/tags">
 <ui:composition template="/templates/principal.xhtml">
 	<ui:define name="corpo">
 		<h:form id="formulario" class="form-horizontal">
@@ -11,8 +12,11 @@
 			<div class="row">
 				<div class="bs-example bs-example-tabs">
 					<ul id="myTab" class="nav nav-tabs">
-						<li><a href="consulta.jsf">Consulta de Pessoas</a></li>
-						<li class="active"><a>Cadastrar Pessoa</a></li>
+						<sec:authorize ifAllGranted="ROLE_ADMIN">
+							<li><a href="consulta.jsf"><i class="fa fa-search-plus"></i> Consulta Vendedores</a></li>
+						</sec:authorize>
+						<li><a href="consulta.jsf"><i class="fa fa-search-plus"></i> Consulta de Pessoas</a></li>
+						<li class="active"><a><i class="fa fa-fw fa-edit"></i> Cadastrar Pessoa</a></li>
 					</ul>
 				</div>
 			</div>
@@ -47,13 +51,15 @@
 					<label class="col-md-1 control-label labelRenovar">TIPO</label>
 					<p:focus for="selectorTipoPessoa"></p:focus>
 					<div class="col-md-2 form-group">
-						<h:selectOneMenu id="selectorTipoPessoa" disabled="#{pessoaBean.alteracao}"
-							class="form-control input-sm" value="#{pessoaBean.tipoPessoa}">
+						<h:selectOneMenu id="selectorTipoPessoa"
+							disabled="#{pessoaBean.alteracao}" class="form-control input-sm"
+							value="#{pessoaBean.tipoPessoa}">
 							<f:selectItem itemValue="F" itemLabel="Pessoa Física" />
 							<f:selectItem itemValue="J" itemLabel="Pessoa Jurídica" />
 							<f:converter converterId="javax.faces.Character" />
 							<p:ajax event="change"
-								update="panelPessoa, panelPessoaFisica, panelPessoaJuridica" process="@this" />
+								update="panelPessoa, panelPessoaFisica, panelPessoaJuridica"
+								process="@this" />
 						</h:selectOneMenu>
 					</div>
 
@@ -92,43 +98,91 @@
 						<div class="col-md-2 form-group">
 							<h:inputText id="rg" class="form-control input-sm"
 								value="#{pessoaBean.pessoaFisica.pesIdentidade}" size="14"
-								requiredMessage="Falta o RG da Pessoa !" maxlength="14"  />
+								requiredMessage="Falta o RG da Pessoa !" maxlength="14" />
 						</div>
-						<div class="col-md-1 col-md-offset-1">
-						<p:inputSwitch disabled="true" offLabel="Cliente" onLabel="Vendedor" />
-						</div>
-						
+						<sec:authorize ifAllGranted="ROLE_ADMIN">
+							<div class="col-md-3">
+								<p:selectOneButton value="#{pessoaBean.tipo}">
+									<f:selectItem itemLabel="Cliente" itemValue="Cliente" />
+									<f:selectItem itemLabel="Vendedor" itemValue="Vendedor" />
+									<p:ajax process="@this" update="panelData" />
+								</p:selectOneButton>
+							</div>
+						</sec:authorize>
+						<p:outputPanel id="panelData">
+							<p:outputPanel
+								rendered="#{pessoaBean.tipo == 'Cliente' ? 'true':'false'}">
+								<!-- Data nascimento -->
+								<label class="col-xs-1 control-label labelRenovar">DATA
+									NASC.</label>
+
+								<div class="col-xs-2">
+									<div class="form-group data">
+										<p:calendar id="data"
+											value="#{pessoaBean.cliente.cliDataNascimento}"
+											locale="pt_BR" pattern="dd/MM/yyyy" minlength="10"
+											maxlength="10" navigator="true" required="true" requiredMessage="Data de nascimento obrigatorio">
+											<h:outputScript name="js/calendario_pt_BR.js" />
+										</p:calendar>
+									</div>
+								</div>
+							</p:outputPanel>
+							<p:outputPanel
+								rendered="#{pessoaBean.tipo == 'Vendedor' ? 'true':'false'}">
+								
+								<div class="col-xs-12">
+									<label class="control-label">DESCRIÇÃO</label>
+
+									<p:inputTextarea id="descricao"
+										class="autosize form-control" rows="5" cols="100" maxlength="149"
+										 counter="counterAcerto"
+										counterTemplate="{0} caracteres restantes"
+										value="#{pessoaBean.vendedor.venDescricao}"
+										style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 125px;" />
+									<div style="text-align: right; padding-top: 20px;">
+										<h:outputText id="counterAcerto" />
+									</div>
+
+								</div>
+							</p:outputPanel>
+						</p:outputPanel>
+
 					</div>
 				</p:outputPanel>
 
 				<p:outputPanel id="panelPessoaJuridica"
 					rendered="#{pessoaBean.tipoPessoa == 'J'}">
 					<div class="row">
-							<!-- CNPJ -->
-			<label class="col-md-1 control-label labelRenovar">CNPJ</label>
-			
-			<div class="col-md-2 form-group">
-				<p:inputMask id="cnpj" class="form-control input-sm"
-					value="#{pessoaBean.pessoaJuridica.pesCnpj}" size="14" 
-					requiredMessage="Cnpj inválido." mask="99.999.999/9999-99">
-					<f:validator validatorId="cadastro.CNPJValidator" />
-				</p:inputMask>
-			</div>
-				<!-- NOME FANTASIA-->
-					<label class="col-md-1 control-label labelRenovar">NOME FANTASIA</label>
+						<!-- CNPJ -->
+						<label class="col-md-1 control-label labelRenovar">CNPJ</label>
 
-					<div class="col-md-5 form-group">
-						<h:inputText id="nomepessoaJuridica" class="form-control input-sm"
-							requiredMessage="Falta o nome da Pessoa !" required="true"
-							value="#{pessoaBean.pessoaJuridica.pesNomeFantasia}" size="30" maxlength="145" />
-					</div>
-					
+						<div class="col-md-2 form-group">
+							<p:inputMask id="cnpj" class="form-control input-sm"
+								value="#{pessoaBean.pessoaJuridica.pesCnpj}" size="14"
+								requiredMessage="Cnpj inválido." mask="99.999.999/9999-99">
+								<f:validator validatorId="cadastro.CNPJValidator" />
+							</p:inputMask>
+						</div>
+						<!-- NOME FANTASIA-->
+						<label class="col-md-1 control-label labelRenovar">NOME
+							FANTASIA</label>
+
+						<div class="col-md-5 form-group">
+							<h:inputText id="nomepessoaJuridica"
+								class="form-control input-sm"
+								requiredMessage="Falta o nome da Pessoa !" required="true"
+								value="#{pessoaBean.pessoaJuridica.pesNomeFantasia}" size="30"
+								maxlength="145" />
+						</div>
+
 					</div>
 				</p:outputPanel>
 			</p:outputPanel>
-			
-			
-			<div class="bs-callout bs-callout-info"> <p>Endereço</p> </div>
+
+
+			<div class="bs-callout bs-callout-info">
+				<p>Endereço</p>
+			</div>
 
 			<ui:include src="/restrito/pessoa/fragments/endereco.xhtml" />
 
@@ -143,12 +197,14 @@
 				<div class="btn-group">
 					<p:commandButton value="Salvar" action="#{pessoaBean.salvar}"
 						class="btn btn-default btn-lg" update="@form" />
-						
-						<p:commandButton id="limpar" value="Limpar" type="button" onclick="javascript: window.location.assign('cadastro.jsf');" 
-						class="btn btn-default btn-lg"/>
-						
+
+					<p:commandButton id="limpar" value="Limpar" type="button"
+						onclick="javascript: window.location.assign('cadastro.jsf');"
+						class="btn btn-default btn-lg" />
+
 					<p:commandButton value="Excluir" action="#{pessoaBean.excluir}"
-						class="btn btn-default btn-lg" update="@form" rendered="#{pessoaBean.pessoa.pesId == 0 ? 'false' : (pessoaBean.pessoa.usuario == null ? 'true' : 'false')}"/>
+						class="btn btn-default btn-lg" update="@form" immediate="true"
+						rendered="#{pessoaBean.pessoa.pesId == 0 ? 'false' : (pessoaBean.pessoa.usuario == null ? 'true' : 'false')}" />
 
 				</div>
 

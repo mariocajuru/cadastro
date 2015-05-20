@@ -3,6 +3,7 @@ package br.com.mario.cadastro.rn;
 import java.util.List;
 
 import br.com.mario.cadastro.dao.VendedorDAO;
+import br.com.mario.cadastro.modelo.Cliente;
 import br.com.mario.cadastro.modelo.Vendedor;
 import br.com.mario.cadastro.util.DAOFactory;
 
@@ -33,10 +34,14 @@ public class VendedorRN {
 	}
 
 	public void excluir(Vendedor vendedor) {		
-			this.vendedorDAO.excluir(vendedor);
+		this.vendedorDAO.excluir(vendedor);
 	}
 
 	public List<Vendedor> listar() {
 		return this.vendedorDAO.listar();
+	}
+
+	public List<Cliente> listarClientesPorVendedor(Vendedor vendedor) {
+		return this.vendedorDAO.listarClientesPorVendedor(vendedor);
 	}
 }

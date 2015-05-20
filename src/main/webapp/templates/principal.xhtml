@@ -165,8 +165,12 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-
-                    <li class="active">
+					 <sec:authorize ifAllGranted="ROLE_ADMIN">
+					  <li >
+                        <a href="#{request.contextPath}/restrito/pessoa/consulta_vendedores.jsf"><i class="fa fa-fw fa-bar-chart-o"></i> Vendedores</a>
+                    </li>
+					 </sec:authorize>
+                    <li >
                         <a href="#{request.contextPath}/restrito/pessoa/consulta.jsf"><i class="fa fa-fw fa-bar-chart-o"></i> Pessoa</a>
                     </li>
                     <li>

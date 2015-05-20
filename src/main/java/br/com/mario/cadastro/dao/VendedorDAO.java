@@ -2,6 +2,7 @@ package br.com.mario.cadastro.dao;
 
 import java.util.List;
 
+import br.com.mario.cadastro.modelo.Cliente;
 import br.com.mario.cadastro.modelo.Vendedor;
 
 public interface VendedorDAO {
@@ -16,4 +17,6 @@ public interface VendedorDAO {
 	public Vendedor buscarPorVendedor(String vendedor);
 
 	public List<Vendedor> listar();
+	
+	public List<Cliente> listarClientesPorVendedor(Vendedor vendedor);
 }

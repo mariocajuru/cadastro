@@ -6,7 +6,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
+import br.com.mario.cadastro.modelo.Cliente;
 import br.com.mario.cadastro.modelo.Vendedor;
 
 public class VendedorDAOHibernate implements VendedorDAO {
@@ -52,6 +54,16 @@ public class VendedorDAOHibernate implements VendedorDAO {
 		Criteria crit= this.session.createCriteria(Vendedor.class);
 		crit.addOrder(Order.asc("pesId"));
 		return crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Cliente> listarClientesPorVendedor(Vendedor vendedor) {
+		Criteria crit= this.session.createCriteria(Cliente.class);
+		crit.add(Restrictions.eq("vendedor.pesId", vendedor.getPesId()));
+		crit.addOrder(Order.asc("pesId"));
+		List<Cliente> lista= crit.list();
+		return lista;
 	}
 
 }

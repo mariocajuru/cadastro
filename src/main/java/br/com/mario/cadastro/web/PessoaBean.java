@@ -12,20 +12,24 @@ import lombok.Getter;
 import lombok.Setter;
 import br.com.mario.cadastro.modelo.Bairro;
 import br.com.mario.cadastro.modelo.Cidade;
+import br.com.mario.cadastro.modelo.Cliente;
 import br.com.mario.cadastro.modelo.EMail;
 import br.com.mario.cadastro.modelo.Endereco;
 import br.com.mario.cadastro.modelo.Pessoa;
 import br.com.mario.cadastro.modelo.PessoaFisica;
 import br.com.mario.cadastro.modelo.PessoaJuridica;
 import br.com.mario.cadastro.modelo.Telefone;
+import br.com.mario.cadastro.modelo.Vendedor;
 import br.com.mario.cadastro.rn.BairroRN;
 import br.com.mario.cadastro.rn.CidadeRN;
+import br.com.mario.cadastro.rn.ClienteRN;
 import br.com.mario.cadastro.rn.EMailRN;
 import br.com.mario.cadastro.rn.EnderecoRN;
 import br.com.mario.cadastro.rn.PessoaFisicaRN;
 import br.com.mario.cadastro.rn.PessoaJuridicaRN;
 import br.com.mario.cadastro.rn.PessoaRN;
 import br.com.mario.cadastro.rn.TelefoneRN;
+import br.com.mario.cadastro.rn.VendedorRN;
 import br.com.mario.cadastro.util.ContextoBean;
 import br.com.mario.cadastro.util.ContextoUtil;
 
@@ -43,16 +47,21 @@ public class PessoaBean implements Serializable{
 	@Getter @Setter	private Pessoa pessoa=new Pessoa();
 	@Getter @Setter	private PessoaFisica pessoaFisica=new PessoaFisica();
 	@Getter @Setter	private PessoaJuridica pessoaJuridica=new PessoaJuridica();
+	@Getter @Setter	private Vendedor vendedor=new Vendedor();
+	@Getter @Setter	private Cliente cliente=new Cliente();
 	@Getter @Setter	private Telefone telefone=new Telefone();
 	@Getter @Setter	private EMail email=new EMail();
 	@Getter @Setter	private Character tipoPessoa=new Character('F');//false para pessoa fisica e true para pessoa juridica
 	@Getter @Setter	private List<Pessoa> listaPessoas;
+	@Getter @Setter	private List<Vendedor> listaVendedores;
 	@Setter	private List<Telefone> listaTelefones;
 	@Setter	private List<EMail> listaEmails;
-	
+
 	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
 
 	@Getter @Setter	private Boolean alteracao=false;
+
+	@Getter @Setter	private String tipo=new String("Cliente");
 
 	@PostConstruct
 	public void init(){
@@ -61,19 +70,19 @@ public class PessoaBean implements Serializable{
 		this.cidade=new Cidade();
 		this.telefone=new Telefone();
 		this.email=new EMail();
+		this.listaPessoas=new ArrayList<Pessoa>();
+		this.listaVendedores=new ArrayList<Vendedor>();
 		
 		String paginaAtual = this.genericBean.getPaginaAtual();
 
 		if (paginaAtual.contains("restrito/pessoa/consulta")) {
-			this.listaPessoas=new PessoaRN().listar();
+			List<Cliente> listaClientes=new VendedorRN().listarClientesPorVendedor(this.genericBean.getUsuarioLogado().getPessoa().getVendedor());
+			for(Cliente c: listaClientes)
+				this.listaPessoas.add(c.getPessoa());
 		}
-		
-		if (paginaAtual.contains("restrito/pessoa/consulta_vendedor")) {
-			this.listaPessoas=new PessoaRN().listar();
-			for(Pessoa p: this.listaPessoas){
-				if(p.getVendedor()==null)
-					this.listaPessoas.remove(p);
-			}
+
+		if (paginaAtual.contains("restrito/pessoa/consulta_vendedores")) {
+			this.listaVendedores=new VendedorRN().listar();
 		}
 
 		if (paginaAtual.contains("restrito/pessoa/cadastro")) {
@@ -85,6 +94,14 @@ public class PessoaBean implements Serializable{
 				alteracao = true;
 				this.pessoa=new PessoaRN().carregar(pessoaID);
 				if(this.pessoa!=null){
+					if(this.pessoa.getCliente()!=null){
+						this.cliente=this.pessoa.getCliente();
+					}else{
+						if(this.pessoa.getVendedor()!=null){
+							this.tipo="Vendedor";
+							this.vendedor=this.pessoa.getVendedor();
+						}
+					}
 					this.endereco=this.pessoa.getEndereco();
 					if(this.endereco != null){
 						this.bairro=this.endereco.getBairro();
@@ -122,37 +139,57 @@ public class PessoaBean implements Serializable{
 	public void salvar(){
 		/** Grava Cidade */
 		CidadeRN cidadaRN = new CidadeRN();
-		
+
 		if (cidadaRN.buscarPorCidade(cidade.getCidNome()) == null){
 			cidadaRN.salvar(this.cidade);
 		} else {
 			this.cidade = cidadaRN.buscarPorCidade(cidade.getCidNome());
 		}
-		
+
 		/** Grava Bairro */
 		BairroRN bairroRN = new BairroRN();
-		
+
 		if (bairroRN.buscarPorBairro(bairro.getBaiNome()) == null) {
 			bairroRN.salvar(this.bairro); 
 		} else {
 			this.bairro = bairroRN.buscarPorBairro(this.bairro.getBaiNome());
 		}
-		
 
-			/** Endereço */
-			String	cep = endereco.getEndCep();
-			cep = cep.replaceAll("[.-]", "");
-			this.endereco.setEndCep(cep);
 
-			this.endereco.setCidade(cidade);
-			this.endereco.setBairro(bairro);
+		/** Endereço */
+		String	cep = endereco.getEndCep();
+		cep = cep.replaceAll("[.-]", "");
+		this.endereco.setEndCep(cep);
 
-			this.pessoa.setEndereco(endereco);
+		this.endereco.setCidade(cidade);
+		this.endereco.setBairro(bairro);
+
+		this.pessoa.setEndereco(endereco);
+
 
 		new PessoaRN().salvar(this.pessoa);
-		
+
+		if(this.tipo.equals("Cliente")){
+			if(this.listaTelefones.size()<1){
+				this.genericBean.mostrarErro("O cadastro de cliente deve conter ao meno um telefone adicionado");
+				return ;
+			}
+
+			if(this.genericBean.getUsuarioLogado().getPessoa().getVendedor()==null){
+				this.genericBean.mostrarErro("O usuario logado não é um vendedor, por favor entre no sistema com o login de vendedor");
+				return ;
+			}
+			this.cliente.setVendedor(this.genericBean.getUsuarioLogado().getPessoa().getVendedor());
+			this.cliente.setPessoa(this.pessoa);
+			new ClienteRN().salvar(this.cliente);
+		}else{
+			this.vendedor.setPessoa(this.pessoa);
+			new VendedorRN().salvar(this.vendedor);
+		}
+
+
 		this.endereco.setPessoa(this.pessoa);
-		
+
 		new EnderecoRN().salvar(this.endereco);
 
 		if(tipoPessoa.equals('F')){
@@ -165,15 +202,15 @@ public class PessoaBean implements Serializable{
 
 			new PessoaJuridicaRN().salvar(this.pessoaJuridica);
 		}
-		
+
 		TelefoneRN telefoneRN = new TelefoneRN();
 		EMailRN eMailRN = new EMailRN(); 
-		
+
 		for(Telefone tel: this.listaTelefones){
 			tel.setPessoa(this.pessoa);
 			telefoneRN.salvar(tel);
 		}
-		
+
 		for(EMail mail: this.listaEmails){
 			mail.setPessoa(pessoa);
 			eMailRN.salvar(mail);
@@ -210,7 +247,7 @@ public class PessoaBean implements Serializable{
 		}
 		return listaEmails;
 	}
-	
+
 	public void addTel(){
 		String tel = telefone.getTelNumero();
 		tel = tel.replaceAll("[.-]", "");
@@ -219,7 +256,7 @@ public class PessoaBean implements Serializable{
 		tel = tel.replaceAll("[ ]", "");
 		TelefoneRN telefoneRN=new TelefoneRN();
 		Telefone telefoneTeste=telefoneRN.buscarPorTelefone(tel);
-		
+
 		if(telefoneTeste == null){
 			this.listaTelefones.add(telefone);
 			this.telefone = new Telefone();
@@ -231,15 +268,15 @@ public class PessoaBean implements Serializable{
 	public void removerEmail(EMail e) {
 		if(listaEmails == null)
 			return;
-		
+
 		listaEmails.remove(e);
 		this.email = new EMail();
 	}
-	
+
 	public void addEmail(){
 		EMailRN emailRN = new EMailRN();
 		EMail emailTeste = emailRN.buscarPorEMail(email.getMaiEndereco());
-		
+
 		if(emailTeste == null){
 			this.listaEmails.add(email);
 			this.email = new EMail();
@@ -253,12 +290,34 @@ public class PessoaBean implements Serializable{
 			this.telefone = new Telefone();			
 		}
 	}
-	
-	
+
+
 	public void excluir(){
+		if(this.pessoa.getVendedor()!=null){
+			this.pessoa.setVendedor(null);
+			new PessoaRN().salvar(this.pessoa);
+			this.genericBean.redirecionarParaPagina("restrito/pessoa/consulta_vendedores.jsf");
+		}
 		new PessoaRN().excluir(this.pessoa);
 		this.genericBean.redirecionarParaPagina("restrito/pessoa/consulta.jsf");
 	}
 
+	public String clientesPorVendedor(int id){
+		if(id!=0){
+			VendedorRN vendedorRN=new VendedorRN();
+			Vendedor vend=new Vendedor();
+			vend.setPesId(id);
+			List<Cliente> listaClientes=vendedorRN.listarClientesPorVendedor(vend);
+			String clientes=new String();
+			for(Cliente cli: listaClientes){
+				clientes+="["+cli.getPessoa().getPesNome() + "]" +" ";
+			}
+			if(listaClientes.size()==0)
+				clientes+="Não Contém Cliente";
+			return clientes;
+		}else{
+			return "";
+		}
+	}
 
 }
