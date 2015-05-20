@@ -26,7 +26,7 @@
 					style="text-align: center; padding-left: 10px;">
 
 					<input type="button" class="btn btn-default btn-sm btn-block"
-						onclick="javascript:openGridInquilinos();" value="Procurar" />
+						onclick="javascript:opengridUses();" value="Procurar" />
 
 				</div>
 			</div>
@@ -79,7 +79,7 @@
 					]
 				},
 				grid: { 
-					name: 'gridInquilinos',
+					name: 'gridUses',
 					style: 'border: 0px; border-left: 1px solid silver',
 					show: {
 						header 		: false,
@@ -101,7 +101,7 @@
 					],
 					records: [
 								
-						<ui:repeat value="#{usuarioBean.listaPessoasNaoUsuarios}" var="pessoa">
+						<ui:repeat value="#{usuarioBean.listaVendedoresNaoUsuarios}" var="pessoa">
 							{ 
 								recid: #{pessoa.getPesId()}, 
 								nome: '#{pessoa.getPesNome()}', 
@@ -113,12 +113,12 @@
 					onDblClick: function(event) {
 						var id = event.recid;
 	
-						var obj = w2ui['gridInquilinos'].get(id);
+						var obj = w2ui['gridUses'].get(id);
 	
 						w2popup.close();
 						
 						if (obj != null) {
-							console.log(w2ui['gridInquilinos'].get(id));
+							console.log(w2ui['gridUses'].get(id));
 							document.getElementById('formulario:inqnome').value = obj.nome     + ""; 
 							document.getElementById('formulario:inqcpf').value  = obj.cpfcnpj  + "";
 							document.getElementById('formulario:idPessoa').value  = obj.recid  + "";
@@ -133,7 +133,7 @@
 			$().w2grid(configInquilinos.grid);
 		});
 
-		function openGridInquilinos() {
+		function opengridUses() {
 			w2popup.open({
 				title 	: 'Selecione uma pessoa',
 				width	: 800,
@@ -143,7 +143,7 @@
 				onOpen  : function (event) {
 					event.onComplete = function () {
 						$('#w2ui-popup #main').w2render('layout');
-						w2ui.layout.content('main', w2ui['gridInquilinos']);
+						w2ui.layout.content('main', w2ui['gridUses']);
 					}
 				},
 				onMax : function (event) { 

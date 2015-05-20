@@ -37,7 +37,7 @@ public class UsuarioBean implements Serializable{
 	@Getter @Setter boolean alteracao=false;
 	
 	@Getter @Setter	private List<Pessoa> listaUsuarios;
-	@Getter @Setter	private List<Pessoa> listaPessoasNaoUsuarios;
+	@Getter @Setter	private List<Pessoa> listaVendedoresNaoUsuarios;
 	@Getter @Setter	private List<String> permissoes;
 	
 	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
@@ -57,7 +57,7 @@ public class UsuarioBean implements Serializable{
 		if (paginaAtual.contains("admin/usuario/cadastro")) {
 			this.permissoes=new ArrayList<String>();
 			
-			this.listaPessoasNaoUsuarios=usuarioRN.listaPessoasNaoUsuario();
+			this.listaVendedoresNaoUsuarios=usuarioRN.listaPessoasNaoUsuario();
 			
 			int usuarioID = this.genericBean.getParametro("id", -1);
 

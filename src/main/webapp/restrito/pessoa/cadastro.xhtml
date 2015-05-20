@@ -13,7 +13,7 @@
 				<div class="bs-example bs-example-tabs">
 					<ul id="myTab" class="nav nav-tabs">
 						<sec:authorize ifAllGranted="ROLE_ADMIN">
-							<li><a href="consulta.jsf"><i class="fa fa-search-plus"></i> Consulta Vendedores</a></li>
+							<li><a href="consulta_vendedores.jsf"><i class="fa fa-search-plus"></i> Consulta Vendedores</a></li>
 						</sec:authorize>
 						<li><a href="consulta.jsf"><i class="fa fa-search-plus"></i> Consulta de Pessoas</a></li>
 						<li class="active"><a><i class="fa fa-fw fa-edit"></i> Cadastrar Pessoa</a></li>
@@ -101,13 +101,15 @@
 								requiredMessage="Falta o RG da Pessoa !" maxlength="14" />
 						</div>
 						<sec:authorize ifAllGranted="ROLE_ADMIN">
+						<p:outputPanel id="panelTipo" rendered="#{!pessoaBean.alteracao}">
 							<div class="col-md-3">
-								<p:selectOneButton value="#{pessoaBean.tipo}">
+								<p:selectOneButton value="#{pessoaBean.tipo}"  >
 									<f:selectItem itemLabel="Cliente" itemValue="Cliente" />
 									<f:selectItem itemLabel="Vendedor" itemValue="Vendedor" />
 									<p:ajax process="@this" update="panelData" />
 								</p:selectOneButton>
 							</div>
+							</p:outputPanel>
 						</sec:authorize>
 						<p:outputPanel id="panelData">
 							<p:outputPanel

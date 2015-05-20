@@ -10,6 +10,7 @@ import org.hibernate.criterion.Order;
 
 import br.com.mario.cadastro.modelo.Pessoa;
 import br.com.mario.cadastro.modelo.Usuario;
+import br.com.mario.cadastro.modelo.Vendedor;
 
 public class UsuarioDAOHibernate implements UsuarioDAO{
 
@@ -72,11 +73,11 @@ public class UsuarioDAOHibernate implements UsuarioDAO{
 	@SuppressWarnings("unchecked")
 	public List<Pessoa> listaPessoasNaoUsuario() {
 		List<Pessoa> lista=new ArrayList<Pessoa>();
-		Criteria crit= this.session.createCriteria(Pessoa.class);
-		List<Pessoa> l= crit.list();
-		for(Pessoa lis: l){
-			if((lis.getUsuario()==null)&&(lis.getPessoaFisica()!=null))
-				lista.add(lis);
+		Criteria crit= this.session.createCriteria(Vendedor.class);
+		List<Vendedor> ven= crit.list();
+		for(Vendedor v: ven){
+			if((v.getPessoa().getUsuario()==null))
+				lista.add(v.getPessoa());
 		}
 		
 		return lista;

@@ -294,9 +294,13 @@ public class PessoaBean implements Serializable{
 
 	public void excluir(){
 		if(this.pessoa.getVendedor()!=null){
-			this.pessoa.setVendedor(null);
-			new PessoaRN().salvar(this.pessoa);
+			PessoaRN pessoaRN=new PessoaRN();
+			for(Cliente p: new VendedorRN().listarClientesPorVendedor(this.pessoa.getVendedor())){
+				pessoaRN.excluir(p.getPessoa());
+			}
+			pessoaRN.excluir(this.pessoa);
 			this.genericBean.redirecionarParaPagina("restrito/pessoa/consulta_vendedores.jsf");
+			return;
 		}
 		new PessoaRN().excluir(this.pessoa);
 		this.genericBean.redirecionarParaPagina("restrito/pessoa/consulta.jsf");
