@@ -8,28 +8,36 @@
 
 		<!-- TELEFONES -->
 		<div class="col-sm-6">
-	
+
 			<p:outputPanel id="displayTelefone" style="padding: 10px;">
-
-				<p:dataList value="#{pessoaBean.listaTelefones}" var="tel" id="tableTel"
-					emptyMessage="Vazio.">
-					<f:facet name="header">Lista de Telefones</f:facet>
-					Numero: #{tel.telNumero}, Operadora: #{tel.telOperadora}, Sms: #{tel.telSms == 'True' ? 'SIM' : 'NÂO'} 
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<i class="fa fa-phone-square"></i> Lista de Telefones
+					</div>
+					<div class="panel-body">
+						<p:dataList value="#{pessoaBean.listaTelefones}" var="tel"
+							id="tableTel" emptyMessage="Vazio.">
+					Numero: #{tel.telNumero}, #{tel.telOperadora}, Sms: #{tel.telSms == 'True' ? 'SIM' : 'NÂO'} 
 					<p:commandButton id="removerTelefone" value="Remover"
-						process="@this" icon="ui-icon-check"
-						actionListener="#{pessoaBean.removerTel(tel)}" update="@this,tableTel">
-						<f:setPropertyActionListener target="#{pessoaBean.telefone}"
-							value="#{tel}" />
-					</p:commandButton>
-				</p:dataList>
-
+								process="@this" icon="ui-icon-trash"
+								actionListener="#{pessoaBean.removerTel(tel)}"
+								update="@this,tableTel">
+								<f:setPropertyActionListener target="#{pessoaBean.telefone}"
+									value="#{tel}" />
+							</p:commandButton>
+						</p:dataList>
+					</div>
+					<div class="panel-footer">
+						<div style="text-align: center;">
+							<p:commandButton id="showDialogButton" type="button"
+								value="Adicionar Telefone" onclick="PF('dialogTelefone').show()"
+								icon="ui-icon-extlink" />
+						</div>
+					</div>
+				</div>
 			</p:outputPanel>
 
-			<div style="text-align: center;">
-				<p:commandButton id="showDialogButton" type="button"
-					value="Adicionar Telefone" onclick="PF('dialogTelefone').show()"
-					icon="ui-icon-extlink" />
-			</div>
+
 
 			<p:dialog header="Adicionar Telefone" widgetVar="dialogTelefone"
 				resizable="false">
@@ -40,9 +48,10 @@
 
 					<p:inputMask id="telefone" label="Numero de telefone"
 						value="#{pessoaBean.telefone.telNumero}" size="15" maxlength="15"
-						requiredMessage="Falta o Telefone da Pessoa !" mask="(99) 9999-9999">
+						requiredMessage="Falta o Telefone da Pessoa !"
+						mask="(99) 9999-9999">
 						<f:validateLength minimum="0" maximum="15" />
-							<f:validateLength minimum="0" maximum="15" />
+						<f:validateLength minimum="0" maximum="15" />
 					</p:inputMask>
 
 					<h:outputLabel value="SMS:" for="sms" />
@@ -60,14 +69,14 @@
 						<f:selectItem itemValue="Oi" itemLabel="Oi" />
 						<f:selectItem itemValue="Fixo" itemLabel="Fixo" />
 					</h:selectOneMenu>
-					</p:panelGrid>
-					<center>
+				</p:panelGrid>
+				<center>
 					<p:commandButton id="submitTel" value="Adicionar"
 						icon="ui-icon-check" actionListener="#{pessoaBean.addTel}"
 						process="@this,telefone,sms,tipotelefone"
 						update="@parent,displayTelefone"
-						onclick="PF('dialogTelefone').hide();"/>
-					</center>
+						onclick="PF('dialogTelefone').hide();" />
+				</center>
 			</p:dialog>
 
 		</div>
@@ -76,28 +85,35 @@
 
 			<!-- EMAIL -->
 			<p:outputPanel id="panelEmail" style="padding: 10px;">
-				<p:dataList id="tableEmail" var="mail"
-					value="#{pessoaBean.listaEmails}" emptyMessage="Vazio." >
-
-					<f:facet name="header">Email's</f:facet> 
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<i class="fa fa-envelope"></i> Email's
+					</div>
+					<div class="panel-body">
+						<p:dataList id="tableEmail" var="mail"
+							value="#{pessoaBean.listaEmails}" emptyMessage="Vazio.">
 								
 					#{mail.maiEndereco}
 					   			
-		  			<p:commandButton id="removerMail" value="Remover"
-						process="@this" icon="ui-icon-check"
-						action="#{pessoaBean.removerEmail(mail)}"
-						update="@this,tableEmail">
-						<f:setPropertyActionListener target="#{pessoaBean.email}" value="#{mail}" />
-					</p:commandButton>
-					
-				</p:dataList>
+		  			<p:commandButton id="removerMail" value="Remover" process="@this"
+								icon="ui-icon-trash" action="#{pessoaBean.removerEmail(mail)}"
+								update="@this,tableEmail">
+								<f:setPropertyActionListener target="#{pessoaBean.email}"
+									value="#{mail}" />
+							</p:commandButton>
+						</p:dataList>
+					</div>
+					<div class="panel-footer">
+						<div style="text-align: center;">
+							<p:commandButton id="addEmail" type="button"
+								value="Adicionar Email" onclick="PF('dialogEmail').show()"
+								icon="ui-icon-extlink" update="displayEmail formMail" />
+						</div>
+					</div>
+				</div>
 			</p:outputPanel>
 
-			<div style="text-align: center;">
-				<p:commandButton id="addEmail" type="button" value="Adicionar Email"
-					onclick="PF('dialogEmail').show()" icon="ui-icon-extlink"
-					update="displayEmail formMail" />
-			</div>
+
 
 			<p:dialog header="Adicionar Email" widgetVar="dialogEmail"
 				resizable="false">
@@ -107,9 +123,9 @@
 
 					<h:outputLabel value="Email:" for="mailC" />
 					<p:inputText id="mailC" label="E-Mail"
-						requiredMessage="Falta o E-Mail da Pessoa !" required="false" 
+						requiredMessage="Falta o E-Mail da Pessoa !" required="false"
 						value="#{pessoaBean.email.maiEndereco}" size="50" maxlength="50"
-						validatorMessage="E-mail inválido, digite um e-mail valido" >
+						validatorMessage="E-mail inválido, digite um e-mail valido">
 					</p:inputText>
 
 					<h:outputLabel value="Spam:" for="spamC" />
@@ -128,6 +144,6 @@
 			</p:dialog>
 
 		</div>
-		
+
 	</div>
 </ui:composition>

@@ -58,7 +58,7 @@
                     <span class="icon-bar"></span>
                 </button>
                <!--  <sec:authorize ifAllGranted="ROLE_ADMIN"> -->
-                <a class="navbar-brand" href="#{request.contextPath}/restrito/principal.jsf"><i class="fa fa-fw fa-dashboard"></i> CONTROLE</a>
+                <a class="navbar-brand" href="#{request.contextPath}/restrito/principal.jsf"><i class="fa fa-fw fa-dashboard iconis" ></i> CONTROLE</a>
                <!--  </sec:authorize> -->
             </div>
             <!-- Top Menu Items -->
@@ -165,31 +165,20 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-					 <sec:authorize ifAllGranted="ROLE_ADMIN">
-					  <li >
-                        <a href="#{request.contextPath}/restrito/pessoa/consulta_vendedores.jsf"><i class="fa fa-fw fa-bar-chart-o"></i> Vendedores</a>
-                    </li>
-					 </sec:authorize>
+<!-- 					 <sec:authorize ifAllGranted="ROLE_ADMIN"> -->
+<!-- 					  <li > -->
+<!--                         <a href="#{request.contextPath}/restrito/pessoa/consulta_vendedores.jsf"><i class="fa fa-fw fa fa-suitcase iconis"></i> Vendedores</a> -->
+<!--                     </li> -->
+<!-- 					 </sec:authorize> -->
                     <li >
-                        <a href="#{request.contextPath}/restrito/pessoa/consulta.jsf"><i class="fa fa-fw fa-bar-chart-o"></i> Pessoa</a>
+                        <a href="#{request.contextPath}/restrito/pessoa/consulta.jsf"><i class="fa fa-fw fa fa-suitcase iconis"></i> Clientes</a>
                     </li>
                     <sec:authorize ifAllGranted="ROLE_ADMIN">
                     <li>
-                        <a href="#{request.contextPath}/admin/usuario/consulta.jsf"><i class="fa fa-fw fa-desktop"></i> Usuários</a>
+                        <a href="#{request.contextPath}/admin/usuario/consulta.jsf"><i class="fa fa-fw fa-users iconis"></i> Usuários</a>
                     </li>
                     </sec:authorize>
-                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                        </ul>
-                    </li>
-                    
+                     
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -204,6 +193,7 @@
 					</div>
 					<!-- /.col-lg-12 -->
 				</div>
+				  
         </div>
         <!-- /#page-wrapper -->
 

@@ -8,7 +8,23 @@
 <ui:composition template="/templates/principal.xhtml">
 	<ui:define name="corpo">
 		<h:form id="formulario" class="form-horizontal">
-
+      <div class="container-fluid">
+      
+      	<!-- Page Heading -->
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+					<sec:authorize ifAllGranted="ROLE_ADMIN"> 					
+					<li ><i class="fa fa-suitcase"></i> Vendedores</li>
+					</sec:authorize>
+					<sec:authorize ifAllGranted="ROLE_VENDEDOR"> 
+					<li ><i class="fa fa-suitcase"></i> Clientes</li>
+					</sec:authorize>
+					<li class="active"><i class="fa fa-fw fa-edit"></i> Cadastro</li>
+				</ol>
+			</div>
+		</div>
+		
 			<div class="row">
 				<div class="bs-example bs-example-tabs">
 					<ul id="myTab" class="nav nav-tabs">
@@ -70,7 +86,7 @@
 					<div class="col-md-5 form-group">
 						<h:inputText id="nomepessoa" class="form-control input-sm"
 							requiredMessage="Falta o nome da Pessoa !" required="true"
-							value="#{pessoaBean.pessoa.pesNome}" size="30" maxlength="145" />
+							value="#{pessoaBean.pessoa.pesNome}" size="30" maxlength="80" />
 					</div>
 
 
@@ -198,18 +214,19 @@
 
 				<div class="btn-group">
 					<p:commandButton value="Salvar" action="#{pessoaBean.salvar}"
-						class="btn btn-default btn-lg" update="@form" />
+						class="btn btn-default btn-lg" update="@form" icon="ui-icon-disk"/>
 
 					<p:commandButton id="limpar" value="Limpar" type="button"
 						onclick="javascript: window.location.assign('cadastro.jsf');"
-						class="btn btn-default btn-lg" />
+						class="btn btn-default btn-lg" icon="ui-icon-document"/>
 
-					<p:commandButton value="Excluir" action="#{pessoaBean.excluir}"
+					<p:commandButton value="Excluir" action="#{pessoaBean.excluir}" icon="ui-icon-trash"
 						class="btn btn-default btn-lg" update="@form" immediate="true"
 						rendered="#{pessoaBean.pessoa.pesId == 0 ? 'false' : (pessoaBean.pessoa.usuario == null ? 'true' : 'false')}" />
 
 				</div>
 
+			</div>
 			</div>
 		</h:form>
 	</ui:define>

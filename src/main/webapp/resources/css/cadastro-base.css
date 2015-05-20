@@ -190,7 +190,7 @@ select {
 	line-height: 24px !important;
 }
 
-.btn-sm,.btn-xssssss{padding:2px 7px;font-size:12px;line-height:1.5;border-radius:3px}
+.btn-sm,.btn-xssssss{padding:2px 7px;font-size:12px;line-height:1.5;border-radius:3px;}
 
 
 /* ------------------------------- */
@@ -636,4 +636,8 @@ table.dataTable thead .sorting:after {
     height: 24px;
     border-top: 0 none;
     border-bottom: 0 none;
+}
+
+.iconis{
+	color:#FFD100;
 }
