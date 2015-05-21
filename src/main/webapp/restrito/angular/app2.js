@@ -2,8 +2,8 @@
  
 var app = angular.module('cadastroApp', [],
     function($interpolateProvider) {
-        $interpolateProvider.startSymbol('{{');
-        $interpolateProvider.endSymbol('}}');
+        $interpolateProvider.startSymbol('<%');
+        $interpolateProvider.endSymbol('%>');
     }
 );
 
@@ -16,7 +16,7 @@ var app = angular.module('cadastroApp', [],
 app.factory('ClienteFactory', function($http) {
     return {
         get : function() {
-            return $http.get('./../restrito/json/json-clientes.jsf');
+            return $http.get('./../json/json-clientes.jsf');
         },
     };
 });
