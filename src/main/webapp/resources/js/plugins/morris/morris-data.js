@@ -26,7 +26,9 @@ $(function() {
 		                    ],
 		                    xkey: 'y',
 		                    ykeys: ['a', 'b'],
-		                    labels: ['Clientes Pessoa Jurídica', 'Clientes Pessoa Física']
+		                    labels: ['Clientes Pessoa Jurídica', 'Clientes Pessoa Física'],
+		                    hideHover: 'auto',
+		                    resize: true
 		    });
 
 
