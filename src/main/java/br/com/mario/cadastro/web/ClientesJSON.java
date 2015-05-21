@@ -18,6 +18,8 @@ import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
 import br.com.mario.cadastro.modelo.Cliente;
+import br.com.mario.cadastro.modelo.EMail;
+import br.com.mario.cadastro.rn.EMailRN;
 import br.com.mario.cadastro.rn.VendedorRN;
 import br.com.mario.cadastro.util.ContextoBean;
 import br.com.mario.cadastro.util.ContextoUtil;
@@ -50,11 +52,17 @@ public class ClientesJSON implements Serializable{
 		
 		for (Cliente item : lista) {
 			JSONObject jsonObject = new JSONObject();
+			String mail=new String();
+			List<EMail> listaEmails=new EMailRN().carregarEmailsPorPessoa(item.getPessoa());
+			for(EMail eMail:listaEmails){
+				mail+= eMail.getMaiEndereco()+" ";
+			}
 
 			jsonObject.put("id", item.getPesId());
 			jsonObject.put("nome", item.getPessoa().getPesNome());
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
 			jsonObject.put("datanasc", sdf.format(item.getPessoa().getCliente().getCliDataNascimento()));
+			jsonObject.put("email", mail);
 			jsonArray.put(jsonObject);
 		}
 		

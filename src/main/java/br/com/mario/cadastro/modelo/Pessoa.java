@@ -2,6 +2,7 @@ package br.com.mario.cadastro.modelo;
 
 // Generated 16/05/2015 14:37:37 by Hibernate Tools 4.3.1
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
@@ -33,6 +36,7 @@ public class Pessoa implements java.io.Serializable {
 	private static final long serialVersionUID = -7425661327958224487L;
 	private int pesId;
 	private String pesNome;
+	private Date pesDataCadastro;
 	private Set<Telefone> telefones = new HashSet<Telefone>(0);
 	private Set<EMail> EMails = new HashSet<EMail>(0);
 	private Endereco endereco;
@@ -52,7 +56,7 @@ public class Pessoa implements java.io.Serializable {
 	public Pessoa(int pesId, String pesNome, Set<Telefone> telefones,
 			Set<EMail> EMails, Endereco endereco,
 			PessoaJuridica pessoaJuridica, Vendedor vendedor, Cliente cliente,
-			Usuario usuario, PessoaFisica pessoaFisica) {
+			Usuario usuario, PessoaFisica pessoaFisica,Date pesDataCadastro) {
 		this.pesId = pesId;
 		this.pesNome = pesNome;
 		this.telefones = telefones;
@@ -63,6 +67,7 @@ public class Pessoa implements java.io.Serializable {
 		this.cliente = cliente;
 		this.usuario = usuario;
 		this.pessoaFisica = pessoaFisica;
+		this.pesDataCadastro=pesDataCadastro;
 	}
 
 	@Id
@@ -162,6 +167,15 @@ public class Pessoa implements java.io.Serializable {
 	public void setPessoaFisica(PessoaFisica pessoaFisica) {
 		this.pessoaFisica = pessoaFisica;
 	}
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "PES_DATA_CADASTRO", length = 23)
+	public Date getPesDataCadastro() {
+		return pesDataCadastro;
+	}
+
+	public void setPesDataCadastro(Date pesDataCadastro) {
+		this.pesDataCadastro = pesDataCadastro;
+	}
 
 	@Override
 	public int hashCode() {
@@ -171,6 +185,8 @@ public class Pessoa implements java.io.Serializable {
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		result = prime * result
 				+ ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result
+				+ ((pesDataCadastro == null) ? 0 : pesDataCadastro.hashCode());
 		result = prime * result + pesId;
 		result = prime * result + ((pesNome == null) ? 0 : pesNome.hashCode());
 		result = prime * result
@@ -208,6 +224,11 @@ public class Pessoa implements java.io.Serializable {
 			if (other.endereco != null)
 				return false;
 		} else if (!endereco.equals(other.endereco))
+			return false;
+		if (pesDataCadastro == null) {
+			if (other.pesDataCadastro != null)
+				return false;
+		} else if (!pesDataCadastro.equals(other.pesDataCadastro))
 			return false;
 		if (pesId != other.pesId)
 			return false;

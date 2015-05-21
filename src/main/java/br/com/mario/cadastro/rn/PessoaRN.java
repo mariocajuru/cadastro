@@ -1,5 +1,6 @@
 package br.com.mario.cadastro.rn;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.mario.cadastro.dao.PessoaDAO;
@@ -25,6 +26,8 @@ public class PessoaRN {
 
 	public void salvar(Pessoa pessoa) {
 		Integer codigo = pessoa.getPesId();
+		if(pessoa.getPesDataCadastro()==null)
+			pessoa.setPesDataCadastro(new Date());
 		if (codigo == null || codigo == 0) {
 			this.pessoaDAO.salvar(pessoa);
 		} else {
