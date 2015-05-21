@@ -7,7 +7,7 @@
 	<div class="row">
 
 		<!-- TELEFONES -->
-		<div class="col-sm-6">
+		<div class="col-xs-12 col-sm-12 col-md-6">
 
 			<p:outputPanel id="displayTelefone" style="padding: 10px;">
 				<div class="panel panel-info">
@@ -19,7 +19,7 @@
 							id="tableTel" emptyMessage="Vazio.">
 					Numero: #{tel.telNumero}, #{tel.telOperadora}, Sms: #{tel.telSms == 'True' ? 'SIM' : 'NÂO'} 
 					<p:commandButton id="removerTelefone" value="Remover"
-								process="@this" icon="ui-icon-trash"
+								process="@this" icon="ui-icon-trash" class="btn btn-danger"
 								actionListener="#{pessoaBean.removerTel(tel)}"
 								update="@this,tableTel">
 								<f:setPropertyActionListener target="#{pessoaBean.telefone}"
@@ -29,7 +29,7 @@
 					</div>
 					<div class="panel-footer">
 						<div style="text-align: center;">
-							<p:commandButton id="showDialogButton" type="button"
+							<p:commandButton id="showDialogButton" type="button" class="btn btn-info"
 								value="Adicionar Telefone" onclick="PF('dialogTelefone').show()"
 								icon="ui-icon-extlink" />
 						</div>
@@ -40,9 +40,9 @@
 
 
 			<p:dialog header="Adicionar Telefone" widgetVar="dialogTelefone"
-				resizable="false">
-
-				<p:panelGrid id="panelX" columns="2" style="margin-bottom:10px">
+				resizable="false" >
+			<div class="col-xs-12">
+				<p:panelGrid id="panelX" columns="2" style="margin-bottom:10px" >
 
 					<h:outputLabel value="Numero de telefone:" for="telefone" />
 
@@ -69,19 +69,22 @@
 						<f:selectItem itemValue="Oi" itemLabel="Oi" />
 						<f:selectItem itemValue="Fixo" itemLabel="Fixo" />
 					</h:selectOneMenu>
+					
 				</p:panelGrid>
+				</div>
+				
 				<center>
 					<p:commandButton id="submitTel" value="Adicionar"
 						icon="ui-icon-check" actionListener="#{pessoaBean.addTel}"
 						process="@this,telefone,sms,tipotelefone"
 						update="@parent,displayTelefone"
-						onclick="PF('dialogTelefone').hide();" />
+						onclick="PF('dialogTelefone').hide();" class="btn btn-info"/>
 				</center>
 			</p:dialog>
 
 		</div>
 
-		<div class="col-sm-6">
+		<div class="col-xs-12 col-sm-12 col-md-6">
 
 			<!-- EMAIL -->
 			<p:outputPanel id="panelEmail" style="padding: 10px;">
@@ -97,7 +100,7 @@
 					   			
 		  			<p:commandButton id="removerMail" value="Remover" process="@this"
 								icon="ui-icon-trash" action="#{pessoaBean.removerEmail(mail)}"
-								update="@this,tableEmail">
+								update="@this,tableEmail" class="btn btn-danger">
 								<f:setPropertyActionListener target="#{pessoaBean.email}"
 									value="#{mail}" />
 							</p:commandButton>
@@ -105,7 +108,7 @@
 					</div>
 					<div class="panel-footer">
 						<div style="text-align: center;">
-							<p:commandButton id="addEmail" type="button"
+							<p:commandButton id="addEmail" type="button" class="btn btn-info"
 								value="Adicionar Email" onclick="PF('dialogEmail').show()"
 								icon="ui-icon-extlink" update="displayEmail formMail" />
 						</div>
@@ -137,7 +140,7 @@
 				</p:panelGrid>
 
 				<center>
-					<p:commandButton id="submitEmail" value="Adicionar"
+					<p:commandButton id="submitEmail" value="Adicionar" class="btn btn-info"
 						icon="ui-icon-check" actionListener="#{pessoaBean.addEmail}"
 						process="@this,mailC,spamC" update="@parent,panelEmail" />
 				</center>

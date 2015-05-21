@@ -41,8 +41,16 @@ public class EMailRN {
 	public List<EMail> listar() {
 		return this.eMailDAO.listar();
 	}
-	
+
 	public List<EMail> carregarEmailsPorPessoa(Pessoa pessoa) {
 		return this.eMailDAO.carregarEmailsPorPessoa(pessoa);
+	}
+
+	public void excluirTodosEmailsPorPessoa(Pessoa pessoa){
+		if(pessoa.getPesId() != 0){
+			for(EMail eMail: carregarEmailsPorPessoa(pessoa)){
+				excluir(eMail);
+			}
+		}
 	}
 }

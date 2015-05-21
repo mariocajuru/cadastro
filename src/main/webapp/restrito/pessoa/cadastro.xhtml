@@ -48,9 +48,9 @@
 
 			<div class="row">
 
-				<label class="col-md-1 control-label labelRenovar">ID</label>
+				<label class="col-md-1 col-xs-2 col-sm-1 control-label labelRenovar">ID</label>
 
-				<div class="col-md-2">
+				<div class="col-md-2 col-xs-9 col-sm-5 col-lg-2">
 					<div class="form-group">
 
 						<h:inputText id="id" class="form-control input-sm"
@@ -64,9 +64,9 @@
 				<div class="row">
 
 					<!-- TIPO -->
-					<label class="col-md-1 control-label labelRenovar">TIPO</label>
+					<label class="col-xs-2 col-sm-1 col-md-1 col-lg-1 control-label labelRenovar">TIPO</label>
 					<p:focus for="selectorTipoPessoa"></p:focus>
-					<div class="col-md-2 form-group">
+					<div class="col-xs-10 col-sm-11 col-md-11 col-lg-2 form-group">
 						<h:selectOneMenu id="selectorTipoPessoa"
 							disabled="#{pessoaBean.alteracao}" class="form-control input-sm"
 							value="#{pessoaBean.tipoPessoa}">
@@ -81,9 +81,9 @@
 
 
 					<!-- NOME -->
-					<label class="col-md-1 control-label labelRenovar">NOME</label>
+					<label class=" col-xs-2 col-sm-1 col-md-1 col-lg-1 control-label labelRenovar">NOME</label>
 
-					<div class="col-md-5 form-group">
+					<div class="col-xs-10 col-sm-11 col-md-11 col-lg-7  form-group">
 						<h:inputText id="nomepessoa" class="form-control input-sm"
 							requiredMessage="Falta o nome da Pessoa !" required="true"
 							value="#{pessoaBean.pessoa.pesNome}" size="30" maxlength="80" />
@@ -96,9 +96,9 @@
 					rendered="#{pessoaBean.tipoPessoa == 'F'}">
 					<div class="row">
 						<!-- CPF -->
-						<label class="col-md-1 control-label labelRenovar">CPF</label>
+						<label class="col-xs-2 col-sm-1 col-md-1 col-lg-1 control-label labelRenovar">CPF</label>
 
-						<div class="col-md-2 form-group">
+						<div class="col-xs-10 col-sm-5 col-md-5 col-lg-2 form-group">
 							<p:inputMask id="cpf" class="form-control input-sm"
 								required="false" value="#{pessoaBean.pessoaFisica.pesCpf}"
 								size="14" requiredMessage="Cpf não preenchido"
@@ -109,21 +109,23 @@
 
 
 						<!-- RG -->
-						<label class="col-md-1 control-label labelRenovar">RG</label>
+						<label class="col-xs-2 col-sm-1 col-md-1 col-lg-1 control-label labelRenovar">RG</label>
 
-						<div class="col-md-2 form-group">
+						<div class="col-xs-10 col-sm-5 col-md-5 col-lg-2 form-group">
 							<h:inputText id="rg" class="form-control input-sm"
 								value="#{pessoaBean.pessoaFisica.pesIdentidade}" size="14"
 								requiredMessage="Falta o RG da Pessoa !" maxlength="14" />
 						</div>
 						<sec:authorize ifAllGranted="ROLE_ADMIN">
 						<p:outputPanel id="panelTipo" rendered="#{!pessoaBean.alteracao}">
-							<div class="col-md-3">
-								<p:selectOneButton value="#{pessoaBean.tipo}"  >
+							<div class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-3  col-lg-2 col-lg-offset-0">
+							<div class="btn-group" role="group">
+								<p:selectOneButton value="#{pessoaBean.tipo}"  class="btn btn-default">
 									<f:selectItem itemLabel="Cliente" itemValue="Cliente" />
 									<f:selectItem itemLabel="Vendedor" itemValue="Vendedor" />
 									<p:ajax process="@this" update="panelData" />
 								</p:selectOneButton>
+								</div>
 							</div>
 							</p:outputPanel>
 						</sec:authorize>
@@ -131,10 +133,10 @@
 							<p:outputPanel
 								rendered="#{pessoaBean.tipo == 'Cliente' ? 'true':'false'}">
 								<!-- Data nascimento -->
-								<label class="col-xs-1 control-label labelRenovar">DATA
+								<label class="col-xs-3 col-sm-2 col-sm-offset-1 col-md-3 col-lg-1  control-label labelRenovar">DATA
 									NASC.</label>
 
-								<div class="col-xs-2">
+								<div class="col-xs-6 col-sm-3 col-md-2 col-lg-1">
 									<div class="form-group data">
 										<p:calendar id="data"
 											value="#{pessoaBean.cliente.cliDataNascimento}"
@@ -172,9 +174,9 @@
 					rendered="#{pessoaBean.tipoPessoa == 'J'}">
 					<div class="row">
 						<!-- CNPJ -->
-						<label class="col-md-1 control-label labelRenovar">CNPJ</label>
+						<label class="col-xs-2 col-sm-1 col-md-1 col-lg-1 control-label labelRenovar">CNPJ</label>
 
-						<div class="col-md-2 form-group">
+						<div class="col-xs-10 col-sm-11 col-md-3 col-lg-2 form-group">
 							<p:inputMask id="cnpj" class="form-control input-sm"
 								value="#{pessoaBean.pessoaJuridica.pesCnpj}" size="14"
 								requiredMessage="Cnpj inválido." mask="99.999.999/9999-99">
@@ -182,10 +184,10 @@
 							</p:inputMask>
 						</div>
 						<!-- NOME FANTASIA-->
-						<label class="col-md-1 control-label labelRenovar">NOME
+						<label class="col-xs-4 col-sm-3 col-md-2 col-lg-1 control-label labelRenovar">NOME
 							FANTASIA</label>
 
-						<div class="col-md-5 form-group">
+						<div class="col-xs-9 col-sm-9 col-md-6 col-lg-7 form-group">
 							<h:inputText id="nomepessoaJuridica"
 								class="form-control input-sm"
 								requiredMessage="Falta o nome da Pessoa !" required="true"
@@ -193,10 +195,10 @@
 								maxlength="145" />
 						</div>
 														<!-- Data inicio da empresa -->
-								<label class="col-xs-1 control-label labelRenovar">DATA
+								<label class="col-xs-3 col-sm-3 col-md-2 col-lg-2 control-label labelRenovar">DATA
 									INIC.</label>
 
-								<div class="col-xs-2">
+								<div class="col-xs-5 col-sm-4 col-md-2 col-lg-2">
 									<div class="form-group data">
 										<p:calendar id="dataEmp"
 											value="#{pessoaBean.cliente.cliDataNascimento}"

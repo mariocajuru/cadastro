@@ -41,8 +41,16 @@ public class TelefoneRN {
 	public List<Telefone> listar() {
 		return this.telefoneDAO.listar();
 	}
-	
+
 	public List<Telefone> carregarTelefonesPorPessoa(Pessoa pessoa) {
 		return this.telefoneDAO.carregarTelefonesPorPessoa(pessoa);
+	}
+
+	public void excluirTodosTelefonesPorPessoa(Pessoa pessoa){
+		if(pessoa.getPesId() != 0){
+			for(Telefone telefone: carregarTelefonesPorPessoa(pessoa)){
+				excluir(telefone);
+			}
+		}
 	}
 }

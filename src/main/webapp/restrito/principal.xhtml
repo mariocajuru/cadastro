@@ -28,14 +28,59 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert"
 							aria-hidden="true">&times;</button>
-						<i class="fa fa-info-circle"></i> <strong>Sistema em fase
-							de teste</strong> Repositório <a
+						<i class="fa fa-info-circle"></i> <strong>Sistema de cadastro e controle de clientes </strong> Repositório <a
 							href="https://github.com/mariocajuru/cadastro.git"
 							class="alert-link"><i class="fa fa-github fa-2x"></i></a> !
 					</div>
 				</div>
 			</div>
 			<!-- /.row -->
+			
+			
+			<!-- Angular -->
+			<div class="content" ng-app="cadastroApp"
+				ng-controller="ClientesController">
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-fw fa fa-suitcase"></i> Clientes
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover table-striped">
+									<thead>
+										<tr class="success">
+											<th><i class="fa fa-key"></i> ID</th>
+											<th><i class="fa fa-star-o"></i> Nome</th>
+											<th><i class="fa fa-calendar"></i> Nascimento</th>
+											<th><i class="fa fa-envelope-o"></i> E-Mail</th>
+										</tr>
+									</thead>
+									<tbody ng-repeat="op in lista">
+										<tr>
+											<td>{{ op.id }}</td>
+											<td>{{ op.nome }}</td>
+											<td>{{ op.datanasc }}</td>
+											<td>{{ op.email }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+</div>
+						<div class="col-xs-12" ng-show="loading">
+							<h2>Carregando...</h2>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<!-- /.Angular -->
 
 			<div class="row">
 				<div class="col-lg-3 col-md-6">
@@ -156,7 +201,7 @@
 						<div class="panel-body">
 							<div id="morris-donut-chart"></div>
 							<div class="text-right">
-								<a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="#">Detalhes <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -165,7 +210,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<i class="fa fa-clock-o fa-fw"></i> Tasks Panel
+								<i class="fa fa-clock-o fa-fw"></i> Agenda
 							</h3>
 						</div>
 						<div class="panel-body">
@@ -195,7 +240,7 @@
 								</a>
 							</div>
 							<div class="text-right">
-								<a href="#">View All Activity <i
+								<a href="#">Mais detalhes <i
 									class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
@@ -205,7 +250,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<i class="fa fa-money fa-fw"></i> Transactions Panel
+								<i class="fa fa-money fa-fw"></i> Controle Financeiro
 							</h3>
 						</div>
 						<div class="panel-body">
@@ -272,7 +317,7 @@
 								</table>
 							</div>
 							<div class="text-right">
-								<a href="#">View All Transactions <i
+								<a href="#">Mais detalhes <i
 									class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
@@ -281,50 +326,6 @@
 			</div>
 			<!-- /.row -->
 
-			<!-- Angular -->
-			<div class="content" ng-app="cadastroApp"
-				ng-controller="ClientesController">
-
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">
-								<i class="fa fa-fw fa fa-suitcase"></i> Clientes
-							</h3>
-						</div>
-						<div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-striped">
-									<thead>
-										<tr class="success">
-											<th><i class="fa fa-key"></i> ID</th>
-											<th><i class="fa fa-star-o"></i> Nome</th>
-											<th><i class="fa fa-calendar"></i> Nascimento</th>
-											<th><i class="fa fa-envelope-o"></i> E-Mail</th>
-										</tr>
-									</thead>
-									<tbody ng-repeat="op in lista">
-										<tr>
-											<td>{{ op.id }}</td>
-											<td>{{ op.nome }}</td>
-											<td>{{ op.datanasc }}</td>
-											<td>{{ op.email }}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-</div>
-						<div class="col-xs-12" ng-show="loading">
-							<h2>Carregando...</h2>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-			<!-- /.Angular -->
 
 		</div>
 		<!-- /.container-fluid -->

@@ -205,12 +205,12 @@ public class PessoaBean implements Serializable{
 
 		TelefoneRN telefoneRN = new TelefoneRN();
 		EMailRN eMailRN = new EMailRN(); 
-
+		
 		for(Telefone tel: this.listaTelefones){
 			tel.setPessoa(this.pessoa);
 			telefoneRN.salvar(tel);
 		}
-
+		
 		for(EMail mail: this.listaEmails){
 			mail.setPessoa(pessoa);
 			eMailRN.salvar(mail);
