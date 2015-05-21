@@ -13,19 +13,12 @@ public class HibernateUtil {
 		try {
 			Configuration configuration = new Configuration();
 			configuration.configure("hibernate.cfg.xml");
-			
-			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-            .applySettings(configuration.getProperties())
-            .build();
-			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-			
-			//http://www.guj.com.br/4797-hibernatecfgxml--hibernate-42--sql-server-2008
-			
-			/*SchemaExport se = new SchemaExport(configuration);  
-	        se.create(true, true); */ 
 
-			// sessionFactory = new
-			// AnnotationConfiguration().configure().buildSessionFactory();
+			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+			.applySettings(configuration.getProperties())
+			.build();
+			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+
 		} catch (Throwable ex) {
 			System.err.println("Criação do SessionFactory falhou (HibernateUtil)." + ex);
 			throw new ExceptionInInitializerError(ex);

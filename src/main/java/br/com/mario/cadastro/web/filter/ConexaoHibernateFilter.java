@@ -20,7 +20,7 @@ public class ConexaoHibernateFilter implements Filter{
 	public void init(FilterConfig confg) throws ServletException {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
-	
+
 	//Referências:
 	//	www.guj.com.br/java/294296-aplicacao-dando-erro-no-tomcat/2 (Reposta: jpmpassos)
 	//	stackoverflow.com/questions/13971460
@@ -46,36 +46,13 @@ public class ConexaoHibernateFilter implements Filter{
 			chain.doFilter(request, response);  
 			this.sf.getCurrentSession().getTransaction().commit();  
 			this.sf.getCurrentSession().close();  
-			//FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");  
 		}
 	}
-	
+
 	public void destroy() {
 
 	}
-	
-//  Código do MARIO de acordo com o livro:
-//
-//	@Override
-//	public void doFilter(ServletRequest servletRequest,
-//			ServletResponse servletResponse, FilterChain chain)
-//			throws ServletException {
-//		try {
-//			this.sf.getCurrentSession().beginTransaction();
-//			chain.doFilter(servletRequest, servletResponse);
-//			this.sf.getCurrentSession().getTransaction().commit();
-//			this.sf.getCurrentSession().close();
-//		} catch (Throwable ex) {
-//			try {
-//				if (this.sf.getCurrentSession().getTransaction().isActive()) {
-//					this.sf.getCurrentSession().getTransaction().rollback();
-//				}
-//			} catch (Throwable t) {
-//				t.printStackTrace();
-//			}
-//			throw new ServletException(ex);
-//		}
-//	}
+
 
 }
 

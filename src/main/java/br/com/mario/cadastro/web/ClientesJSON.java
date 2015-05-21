@@ -28,34 +28,34 @@ import br.com.mario.cadastro.util.ContextoUtil;
 @ManagedBean(name = "JSONClientes")
 @ViewScoped
 public class ClientesJSON implements Serializable{
-	
+
 	/**
 	 * 
 	 */
 	@Getter private static final long serialVersionUID = -8489722558999043689L;
-	
+
 	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
 
 	public void rendenizarJson() throws IOException, JSONException {
-	    FacesContext facesContext = FacesContext.getCurrentInstance();
-	    ExternalContext externalContext = facesContext.getExternalContext();
-	    externalContext.setResponseContentType("application/json");
-	    externalContext.setResponseCharacterEncoding("UTF-8");
-	    externalContext.getResponseOutputWriter().write(carregarLista());
-	    facesContext.responseComplete();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		externalContext.setResponseContentType("application/json");
+		externalContext.setResponseCharacterEncoding("UTF-8");
+		externalContext.getResponseOutputWriter().write(carregarLista());
+		facesContext.responseComplete();
 	}
-	
+
 	private String carregarLista() throws JSONException {
 		List<Cliente> lista = new VendedorRN().listarClientesPorVendedor(this.genericBean.getUsuarioLogado().getPessoa().getVendedor());
-		
+
 		JSONArray jsonArray = new JSONArray();
-		
+
 		for (Cliente item : lista) {
 			JSONObject jsonObject = new JSONObject();
 			String mail=new String();
 			List<EMail> listaEmails=new EMailRN().carregarEmailsPorPessoa(item.getPessoa());
 			for(EMail eMail:listaEmails){
-				mail+= eMail.getMaiEndereco()+" ";
+				mail+= eMail.getMaiEndereco()+". ";
 			}
 
 			jsonObject.put("id", item.getPesId());
@@ -65,8 +65,8 @@ public class ClientesJSON implements Serializable{
 			jsonObject.put("email", mail);
 			jsonArray.put(jsonObject);
 		}
-		
+
 		return jsonArray.toString();
 	}
-	
+
 }

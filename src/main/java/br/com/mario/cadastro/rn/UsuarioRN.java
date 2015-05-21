@@ -34,17 +34,17 @@ public class UsuarioRN {
 	}
 
 	public void excluir(Usuario usuario) {		
-			this.usuarioDAO.excluir(usuario);
+		this.usuarioDAO.excluir(usuario);
 	}
 
 	public List<Usuario> listar() {
 		return this.usuarioDAO.listar();
 	}
-	
+
 	public List<Pessoa> listarUsuarioPessoas() {
 		return this.usuarioDAO.listarUsuarioPessoas();
 	}
-	
+
 	public List<Pessoa> listaPessoasNaoUsuario() {
 		return this.usuarioDAO.listaPessoasNaoUsuario();
 	}

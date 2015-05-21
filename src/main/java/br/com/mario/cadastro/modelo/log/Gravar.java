@@ -26,13 +26,9 @@ public class Gravar implements RevisionListener {
 	public void newRevision(Object arg0) {
 		Auditoria auditoria=(Auditoria) arg0;
 		
-		//auditoria.setPagina(this.genericBean.getPaginaAtual());
-
-		//Usuario pessoa= new UsuarioRN().carregar(this.genericBean.getUsuarioLogado().getFunId());
-
+	
 		auditoria.setNome(this.genericBean.getUsuarioLogado().getPessoa().getPesNome());
 		auditoria.setLogin(this.genericBean.getUsuarioLogado().getUseLogin());
-		//auditoria.setNivelAcesso(this.genericBean.getUsuarioLogado().getPermissao().toString());
 		auditoria.setIp_usuario(this.genericBean.getUsuarioLogado().getPesId());
 		
 		 @SuppressWarnings("rawtypes")
@@ -55,7 +51,6 @@ public class Gravar implements RevisionListener {
 	            	auditoria.setNome_maquina(myself.getHostName());
 	            	achou=true;
 	            	//http://mariojp.wordpress.com/2012/03/11/obtendo-o-endereco-ip-real-da-maquina-na-rede/
-	           // System.out.println("HostName: " + myself.getHostName() + " IP: " + myself.getHostAddress()); 
 	            }
 	            if(achou)break;
 	         } 
@@ -63,20 +58,7 @@ public class Gravar implements RevisionListener {
 	      }
 		
 		
-		/*String ip=new String();
-		String nome_maquina=new String();
-		try {  
-			java.net.InetAddress i = java.net.InetAddress.getLocalHost();  
-			ip = i.getHostAddress();
-			nome_maquina=i.getHostName();
-		}  
-		catch(Exception e){
-			e.printStackTrace();
-			System.out.println("ERRO na auditoria : "+ e.getMessage());
-		}  
-		auditoria.setIp_maquina(ip);
-		auditoria.setNome_maquina(nome_maquina);*/
-	}
+		}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

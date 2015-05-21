@@ -77,21 +77,21 @@ public class EmailBean {
 			context.addMessage(null, msg);
 			return;
 		}catch (MessagingException mex) 
-        {
+		{
 			FacesMessage msg = new FacesMessage(null,"ERRO! Email não enviado. \nEntre em contato com o responsável pelo sistema.");
 			context.addMessage(null, msg);
-            mex.printStackTrace();
+			mex.printStackTrace();
 
-            Exception ex = null;
+			Exception ex = null;
 
-            if ((ex = mex.getNextException()) != null) 
-            {
-                ex.printStackTrace();
-            }
-        } 
-		
-	
-		
+			if ((ex = mex.getNextException()) != null) 
+			{
+				ex.printStackTrace();
+			}
+		} 
+
+
+
 		this.assunto=new String();
 		this.de=new String();
 		this.mensagem=new String();
@@ -101,13 +101,6 @@ public class EmailBean {
 	public Properties configuracaoEmail() {
 		Properties config = new Properties();
 
-		//Configuração adicional para servidor proxy.
-		//Descomentar somente se utliza servidor com proxy.
-		/*
-		props.setProperty("proxySet", "true");
-		props.setProperty("socksProxyHost","127.0.0.1"); //IP do Servidor Proxy
-		props.setProperty("socksProxyPort","8080");  //Porta do servidor Proxy
-		*/
 		config.put("mail.transport.protocol", "smtp"); //define protocolo de envio como SMTP
 		config.put("mail.smtp.starttls.enable", "true");
 		config.put("mail.smtp.host", SERVIDOR_SMTP); //servidor SMTP do GMAIL

@@ -18,12 +18,9 @@ public class BairroDAOHibernate implements BairroDAO {
 	this.session = session;
 }
 	public void salvar(Bairro bairro) {
-		//if(buscarPorBairro(bairro.getBaiNome())==null){
 		bairro.setBaiNome(removerAcentos(bairro.getBaiNome()));
 		this.session.save(bairro);//aqui era somente o metodo saveOrUpdate 
-		/*}else{
-			System.out.println("j� existe o Bairro \n");
-		}*/
+		
 	}
 
 	public void atualizar(Bairro bairro) {
@@ -60,15 +57,7 @@ public class BairroDAOHibernate implements BairroDAO {
 		
 		Criteria crit= this.session.createCriteria(Bairro.class);		
 		crit.createAlias("enderecos", "bai").add(Restrictions.eq("bai.bairro.baiId", bairro.getBaiId()));
-		/*crit.createAlias("enderecoImovelDesejados", "baiDesejado").add(Restrictions.eq("baiDesejado.bairro.baiId", bairro.getBaiId()));
-		Disjunction ou=Restrictions.disjunction();// representar uma expressÃ£o OR
-		Conjunction e = Restrictions.conjunction();// representar uma expressÃ£o AND
-		crit.add(Restrictions.eq("bai.bairro.baiId", bairro.getBaiId()));
-		ou.add(Restrictions.eq("baiDesejado.bairro.baiId", bairro.getBaiId()));
-		//crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		crit.add(ou);*/
 		List<Bairro> lista=crit.list();
-	//	Bairro b=(Bairro) crit.uniqueResult();
 		cont=lista.size();
 		
 		if(cont==0){

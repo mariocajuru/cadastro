@@ -35,19 +35,19 @@ public class UsuarioBean implements Serializable{
 	@Getter @Setter	private String senha;
 	@Getter @Setter	private String loguin;
 	@Getter @Setter boolean alteracao=false;
-	
+
 	@Getter @Setter	private List<Pessoa> listaUsuarios;
 	@Getter @Setter	private List<Pessoa> listaVendedoresNaoUsuarios;
 	@Getter @Setter	private List<String> permissoes;
-	
+
 	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
-	
+
 	@PostConstruct
 	public void init(){
 		UsuarioRN usuarioRN = new UsuarioRN();
 		this.usuario=new Usuario();
 		this.pessoa=new Pessoa();
-		
+
 		String paginaAtual = this.genericBean.getPaginaAtual();
 
 		if (paginaAtual.contains("admin/usuario/consulta")) {
@@ -56,9 +56,9 @@ public class UsuarioBean implements Serializable{
 
 		if (paginaAtual.contains("admin/usuario/cadastro")) {
 			this.permissoes=new ArrayList<String>();
-			
+
 			this.listaVendedoresNaoUsuarios=usuarioRN.listaPessoasNaoUsuario();
-			
+
 			int usuarioID = this.genericBean.getParametro("id", -1);
 
 			if (usuarioID <= 0) {
@@ -79,7 +79,7 @@ public class UsuarioBean implements Serializable{
 			}
 		}
 	}
-	
+
 	public void salvar(){
 		if((this.pessoa==null)||(this.pessoa.getPesId()<1)){
 			this.senha=new String();
@@ -87,12 +87,12 @@ public class UsuarioBean implements Serializable{
 			this.genericBean.mostrarErro("Selecione o usuário ");
 			return ;
 		}
-		
+
 		if(this.usuario.getUseCargo()==null || this.usuario.getUseCargo()==""){
 			this.genericBean.mostrarErro("Campo Cargo obrigatorio");
 			return ;
 		}
-		
+
 		if (!this.senha.equals(this.confirmaSenha)) {
 			this.senha=new String();
 			this.confirmaSenha=new String();
@@ -130,7 +130,7 @@ public class UsuarioBean implements Serializable{
 		this.usuario.setPessoa(this.pessoa);
 		this.usuario.setUseAtivo(true);
 		usuarioRN.salvar(this.usuario);
-		
+
 		EmailBean mail=new EmailBean();
 		mail.setAssunto("Sistema de cadastro do usuário");
 		mail.setDe("mariocajuru@gmail.com");
@@ -143,10 +143,10 @@ public class UsuarioBean implements Serializable{
 					", login: "+this.usuario.getUseLogin());
 			mail.enviarEmail();
 		}
-		
+
 		this.genericBean.redirecionarParaPagina("admin/usuario/consulta.jsf");
 	}
-	
+
 	public void ativar() {
 
 		if (this.usuario.getUseAtivo() == true) {
@@ -156,7 +156,7 @@ public class UsuarioBean implements Serializable{
 		}
 
 		new UsuarioRN().salvar(this.usuario);
-		
+
 		this.genericBean.redirecionarParaPagina("admin/usuario/consulta.jsf");
 	}
 }

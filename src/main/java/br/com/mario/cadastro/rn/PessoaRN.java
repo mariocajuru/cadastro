@@ -37,7 +37,7 @@ public class PessoaRN {
 	}
 
 	public void excluir(Pessoa pessoa) {		
-			this.pessoaDAO.excluir(pessoa);
+		this.pessoaDAO.excluir(pessoa);
 	}
 
 	public List<Pessoa> listar() {

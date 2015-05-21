@@ -27,59 +27,57 @@ import br.com.mario.cadastro.util.HibernateUtil;
 @ManagedBean
 @RequestScoped
 public class GenericBean implements Serializable{
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6953662389147414100L;
 	@Getter @Setter private static Usuario usuarioLogado = new Usuario();
-	
+
 	public GenericBean() { }
-	
+
 	public void verificaAutenticacao() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ContextoBean contextoBean = ContextoUtil.getContextoBean();
-		
+
 		if (contextoBean == null) {
 			return;
 		}
-		
+
 		if (contextoBean.getUsuarioLogado() == null) {
 			redirecionarParaPagina("publico/login.jsf");
 			return;
 		}
 
 		/** Grava o funcionário logado em um várivel estática */
-		/*String fun = contextoBean.getFuncionarioLogado().getFunLogin();
-		funcionarioLogado = new FuncionarioRN().buscarPorLogin(fun);*/
 		usuarioLogado=contextoBean.getUsuarioLogado();
-		
+
 		/** Bloqueia a página de login caso um funcionário esteja logado*/
 		if (facesContext.getViewRoot().getViewId().contains("login") && usuarioLogado != null) {
-			
+
 		}
 	}
-	
+
 	@PostConstruct
 	public void testandoNumeroDaSessaoInicio(){
 		System.out.println("Numero da Sessao Inicio do GenericBean "+hashCode());
 	}
-	
+
 	@PreDestroy
 	public void testandoNumeroDaSessaoFim(){
 		System.out.println("Numero da Sessao Fim do GenericBean "+hashCode());
 	}
-	
+
 	public void mostrarAviso(String mensagem) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, mensagem, "")); 
 	}
-	
+
 	public void mostrarErro(String mensagem) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, "")); 
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -93,7 +91,7 @@ public class GenericBean implements Serializable{
 			System.out.println("Problema ao redirecionar para " + caminhoPagina);
 		}
 	}
-	
+
 	/**
 	 * Redireciona para uma página do sistema.
 	 * 
@@ -106,14 +104,14 @@ public class GenericBean implements Serializable{
 			System.out.println("Problema ao redirecionar para " + caminhoPagina);
 		}
 	}
-	
+
 	public void commit() {
 		Transaction sessao = HibernateUtil.getSessionFactory().getCurrentSession().getTransaction();
-		
+
 		if (sessao != null && sessao.isActive())		
 			sessao.commit();
 	}
-	
+
 	/**
 	 * Cancela todas alterações feitas no banco de dados na página
 	 * @param msg mensagem de aviso para o úsuario
@@ -121,15 +119,15 @@ public class GenericBean implements Serializable{
 	public void rollback(String msg) {	
 		/** TODO: O rollback não está funcionado corretamente */
 		Transaction sessao = HibernateUtil.getSessionFactory().getCurrentSession().getTransaction();
-		
+
 		sessao.isParticipating();
-		
+
 		if (sessao.isActive() && !sessao.wasCommitted() && !sessao.isParticipating() && !sessao.wasRolledBack())
 			sessao.rollback();
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg, ""));
 	}
-	
+
 	/**
 	 * Eliminar objetos na session
 	 * @param Eliminar objetos na session
@@ -139,52 +137,52 @@ public class GenericBean implements Serializable{
 				.getCurrentSession();
 		sessao.evict(object);
 	}
-	
+
 	public int getParametro(String nome, Integer valorPadrao) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-				
+
 		try { 
 			int valor = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get(nome));
-	       	
+
 			return valor;
-	    } catch(NumberFormatException e) { 
-	        return valorPadrao; 
-	    }
+		} catch(NumberFormatException e) { 
+			return valorPadrao; 
+		}
 	}
 
 	public String getParametro(String nome, String valorPadrao) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		
+
 		String valor = facesContext.getExternalContext().getRequestParameterMap().get(nome);
-		
+
 		return valor == null ? valorPadrao : valor;
 	}
-	
+
 	public String getPaginaAtual() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		
+
 		String viewId = facesContext.getViewRoot().getViewId();
-		
+
 		return viewId;
 	}
-	
+
 	public double arredondarCasasDecimais(double value) {
-	    long factor = (long) Math.pow(10, 2);
-	    value = value * factor;
-	    long tmp = Math.round(value);
-	    return (double) tmp / factor;
+		long factor = (long) Math.pow(10, 2);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (double) tmp / factor;
 	}
-	
+
 	public Date primeiroDiaMes(Date date){
-		 Calendar calendar = Calendar.getInstance();
-		 calendar.setTime(date);
-		 calendar.set(Calendar.HOUR_OF_DAY, 0);
-		 calendar.set(Calendar.MINUTE, 0);
-		 calendar.set(Calendar.SECOND, 0);
-		 calendar.set(Calendar.MILLISECOND, 0);
-		 return calendar.getTime();
-		}
-	
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+
 	public Date ultimoDiaMes(Date date){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -197,9 +195,9 @@ public class GenericBean implements Serializable{
 		calendar.set(Calendar.MILLISECOND, 999);
 		return calendar.getTime();
 	}
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-		
+
 }

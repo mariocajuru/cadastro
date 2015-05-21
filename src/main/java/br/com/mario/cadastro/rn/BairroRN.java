@@ -41,11 +41,6 @@ public class BairroRN {
 		try {
 			throw new RNException("Erro ao excluir. Esse bairro tem ligações com outros endereços e não pode ser deletado.");
 		} catch (RNException e) {
-			/*FacesContext facesContext = FacesContext.getCurrentInstance();  
-			facesContext.addMessage("ERRO",   
-			        new FacesMessage(FacesMessage.SEVERITY_ERROR,   
-			                               "Bairro não excluido",   
-			                               "Bairro não excluido"));*/
 			return false;
 		}
 	}

@@ -22,11 +22,7 @@ public class Auditoria extends DefaultRevisionEntity implements java.io.Serializ
 	private String login;
 	
 	private String nome;
-	/*@Column(length=900)
-	private String nivelAcesso;*/
-	/*private String cpf;*/
 	private String ip_maquina;
-	/*private String pagina;*/
 	private String nome_maquina;
 	
 	private Integer ip_usuario;
@@ -46,10 +42,6 @@ public class Auditoria extends DefaultRevisionEntity implements java.io.Serializ
 	public void setIp_maquina(String ip_maquina) {
 		this.ip_maquina = ip_maquina;
 	}
-		
-	
-
-	
 	public String getLogin() {
 		return login;
 	}
