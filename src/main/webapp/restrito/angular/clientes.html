@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	
+    <script  src="../../resources/js/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+
+	<div class="content" ng-app="cadastroApp" ng-controller="ClientesController" >
+
+		<div class="row">
+			
+			<div class="col-xs-12">
+				<h2>Clientes</h2>
+			</div>
+			
+			<div class="col-xs-12">
+			
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Nascimento</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="op in lista">
+						<tr>
+							<td><% op.id %></td>
+							<td><% op.nome %></td>
+							<td><% op.datanasc %></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="col-xs-12" ng-show="loading">
+				<h2>Carregando...</h2>
+			</div>
+			
+		</div>
+		
+	</div>
+</body>
+</html>

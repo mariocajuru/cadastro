@@ -192,6 +192,20 @@
 								value="#{pessoaBean.pessoaJuridica.pesNomeFantasia}" size="30"
 								maxlength="145" />
 						</div>
+														<!-- Data inicio da empresa -->
+								<label class="col-xs-1 control-label labelRenovar">DATA
+									INIC.</label>
+
+								<div class="col-xs-2">
+									<div class="form-group data">
+										<p:calendar id="dataEmp"
+											value="#{pessoaBean.cliente.cliDataNascimento}"
+											locale="pt_BR" pattern="dd/MM/yyyy" minlength="10"
+											maxlength="10" navigator="true" required="true" requiredMessage="Data de inicio da empresa obrigatorio">
+											<h:outputScript name="js/calendario_pt_BR.js" />
+										</p:calendar>
+									</div>
+								</div>
 
 					</div>
 				</p:outputPanel>

@@ -2,6 +2,7 @@ package br.com.mario.cadastro.web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,13 +11,16 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
 import br.com.mario.cadastro.modelo.Cliente;
-import br.com.mario.cadastro.rn.ClienteRN;
+import br.com.mario.cadastro.rn.VendedorRN;
+import br.com.mario.cadastro.util.ContextoBean;
+import br.com.mario.cadastro.util.ContextoUtil;
 
 
 @ManagedBean(name = "JSONClientes")
@@ -27,6 +31,8 @@ public class ClientesJSON implements Serializable{
 	 * 
 	 */
 	@Getter private static final long serialVersionUID = -8489722558999043689L;
+	
+	@Getter @Setter private ContextoBean genericBean=ContextoUtil.getContextoBean();
 
 	public void rendenizarJson() throws IOException, JSONException {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -38,7 +44,7 @@ public class ClientesJSON implements Serializable{
 	}
 	
 	private String carregarLista() throws JSONException {
-		List<Cliente> lista = new ClienteRN().listar();
+		List<Cliente> lista = new VendedorRN().listarClientesPorVendedor(this.genericBean.getUsuarioLogado().getPessoa().getVendedor());
 		
 		JSONArray jsonArray = new JSONArray();
 		
@@ -46,8 +52,9 @@ public class ClientesJSON implements Serializable{
 			JSONObject jsonObject = new JSONObject();
 
 			jsonObject.put("id", item.getPesId());
-			jsonObject.put("value", item.getPessoa().getPesNome());
-			
+			jsonObject.put("nome", item.getPessoa().getPesNome());
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+			jsonObject.put("datanasc", sdf.format(item.getPessoa().getCliente().getCliDataNascimento()));
 			jsonArray.put(jsonObject);
 		}
 		
